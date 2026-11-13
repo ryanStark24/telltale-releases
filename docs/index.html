@@ -72,6 +72,17 @@ h1 .trace{background:linear-gradient(95deg,var(--trace-a),var(--trace-b) 45%,var
 .btn:hover{transform:translateY(-2px);box-shadow:0 1px 0 oklch(1 0 0 / .2) inset,0 16px 40px -8px var(--glow)}
 .btn:active{transform:translateY(0)}
 .btn svg{width:20px;height:20px;flex:none}
+.btn .bt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;text-align:left}
+.btn .bl{font-size:18px;font-weight:650}
+.btn small{font-size:13.5px;font-weight:450;opacity:.85;margin-top:2px}
+.btn.sec{background:var(--bg-raised);color:var(--fg);border:1px solid var(--line);box-shadow:none}
+.btn.sec:hover{border-color:var(--fg-2);box-shadow:none}
+.btn[hidden]{display:none}
+.dls{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.latest{margin:0;display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:16px;color:var(--fg-2);background:var(--bg-subtle);border:1px solid var(--line);border-radius:99px;padding:6px 16px 6px 6px}
+.latest b{color:var(--fg);font-weight:650}
+.latest .pill{background:var(--live-tint);color:var(--live-text);font-weight:600;font-size:13.5px;padding:3px 12px;border-radius:99px}
+.latest .sep{opacity:.5;margin:0 -4px}
 .meta{font-size:14.5px;color:var(--fg-muted);min-height:22px;margin:0}
 .alt{font-size:15px;margin:0;color:var(--fg-2)}
 .alt a{text-underline-offset:3px}
@@ -182,7 +193,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
   .win-title{display:none}
   .live{margin-left:auto}
 }
-@media (max-width:420px){.btn{width:100%;justify-content:center;padding:16px 18px}.cta{width:100%}}
+@media (max-width:560px){.dls{flex-direction:column;width:100%}.btn{width:100%;justify-content:center;padding:14px 18px}.cta{width:100%}.latest{font-size:15px}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -207,14 +218,16 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
       <h1>Ask your org. <span class="trace">Get the reason.</span></h1>
       <p class="lede">Telltale is a Mac app for Salesforce developers and QAs. It reads your org, your tickets, your code and your debug logs, then tells you what is going on and shows its proof.</p>
       <div class="cta" id="download">
-        <a class="btn" id="dl-main" href="https://github.com/ryanStark24/telltale-releases/releases">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg>
-          <span id="dl-label">Download for Mac</span>
-        </a>
-        <p class="meta" id="dl-meta" aria-live="polite">Opens the releases page on GitHub.</p>
-        <p class="alt" id="dl-alt" hidden></p>
+        <!--baked:cta-->
+        <p class="latest" id="dl-latest"><span class="pill">Latest</span><b>v1.7.4 beta</b><span class="sep">·</span>November 13, 2026</p>
+        <div class="dls" id="dls">
+          <a class="btn" id="dl-arm" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip" data-dl="arm64" data-ver="1.7.4-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Apple Silicon</span><small>M1 or later · 128 MB</small></span></a>
+          <a class="btn sec" id="dl-intel" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip" data-dl="x64" data-ver="1.7.4-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Intel</span><small>Intel Mac · 135 MB</small></span></a>
+        </div>
+        <p class="alt" id="dl-all" hidden><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p>
+        <!--/baked:cta-->
         <p class="hint" id="dl-hint">Not sure which Mac you have? Open the Apple menu › About This Mac. If it says Apple M1 or later, pick Apple Silicon. If it says Intel, pick Intel.</p>
-        <noscript><p class="alt"><a href="https://github.com/ryanStark24/telltale-releases/releases">Download Telltale from the releases page on GitHub</a></p></noscript>
+        <noscript><p class="alt"><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p></noscript>
       </div>
 
       <div class="stage" id="stage">
@@ -324,9 +337,11 @@ var TELLTALE_CONFIG={
 (function(){
   var REL='https://github.com/ryanStark24/telltale-releases/releases';
   var API='https://api.github.com/repos/ryanStark24/telltale-releases/releases?per_page=5';
-  var KEY='telltale-releases-v1';
+  var KEY='telltale-releases-v2';
   var $=function(id){return document.getElementById(id)};
-  var state={arch:'arm',rel:null,sure:false};
+  /* The current release, rewritten by scripts/update-latest.mjs on every release. The download never depends on the network. */
+  var BAKED=/*baked:json*/{"tag_name":"v1.7.4-beta.1","published_at":"2026-11-13T02:04:37Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.7.4-beta.1","prerelease":true,"assets":[{"name":"Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip","size":134234939,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip"},{"name":"Telltale-1.7.4-beta.1-mac-Intel-x64.zip","size":141211794,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip"}]}/*baked:end*/;
+  var state={arch:'arm',rel:BAKED,sure:false};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- window: replay + tilt ---------- */
@@ -389,33 +404,28 @@ var TELLTALE_CONFIG={
   function find(rel,pat){var a=(rel.assets||[]);for(var i=0;i<a.length;i++)if(a[i].name&&a[i].name.indexOf(pat)>-1&&a[i].browser_download_url)return a[i];return null}
 
   /* ---------- render download ---------- */
+  function setBtn(id,asset,kind,desc,primary,sure){
+    var b=$(id);if(!b)return;
+    if(!asset){b.hidden=true;return}
+    b.hidden=false;b.href=asset.browser_download_url;b.setAttribute('data-dl',kind);b.setAttribute('data-ver',verLabel(state.rel.tag_name).replace(/\s+/g,'-'));
+    b.classList.toggle('sec',!primary);
+    b.querySelector('small').textContent=desc+(asset.size?' · '+mb(asset.size):'')+(sure?' · Looks like your Mac':'');
+  }
   function render(){
-    var rel=state.rel,main=$('dl-main'),alt=$('dl-alt');
-    var arm=rel&&find(rel,'AppleSilicon-arm64.zip'),intel=rel&&find(rel,'Intel-x64.zip');
-    if(!rel||(!arm&&!intel)){ // fallback
-      main.setAttribute('data-dl','releases');main.setAttribute('data-ver','fallback');main.href=REL;$('dl-label').textContent='Download for Mac';
-      $('dl-meta').textContent='Opens the releases page on GitHub. Pick the Apple Silicon or Intel zip.';
-      alt.hidden=true;return;
+    var rel=state.rel,arm=rel&&find(rel,'AppleSilicon-arm64.zip'),intel=rel&&find(rel,'Intel-x64.zip');
+    if(!rel||(!arm&&!intel)){$('dls').hidden=true;$('dl-all').hidden=false;return} // only when no download URL is known at all
+    $('dls').hidden=false;$('dl-all').hidden=true;
+    var want=state.arch==='intel'&&intel?'intel':(arm?'arm':'intel');
+    setBtn('dl-arm',arm,'arm64','M1 or later',want==='arm',state.sure&&want==='arm');
+    setBtn('dl-intel',intel,'x64','Intel Mac',want==='intel',state.sure&&want==='intel');
+    var lat=$('dl-latest');
+    if(lat&&rel.tag_name){
+      lat.textContent='';
+      var p=document.createElement('span');p.className='pill';p.textContent='Latest';
+      var v=document.createElement('b');v.textContent='v'+verLabel(rel.tag_name);
+      lat.appendChild(p);lat.appendChild(v);
+      if(rel.published_at){try{var d=new Date(rel.published_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});var sp=document.createElement('span');sp.className='sep';sp.textContent='·';lat.appendChild(sp);lat.appendChild(document.createTextNode(d))}catch(e){}}
     }
-    var want=state.arch==='intel'?'intel':'arm';
-    var pick=want==='intel'?intel:arm, other=want==='intel'?arm:intel;
-    if(!pick){pick=other;other=null;want=want==='intel'?'arm':'intel'}
-    var name=want==='intel'?'Intel':'Apple Silicon';
-    main.href=pick.browser_download_url;main.setAttribute('data-dl',want==='intel'?'x64':'arm64');main.setAttribute('data-ver',verLabel(rel.tag_name).replace(/\s+/g,'-'));
-    $('dl-label').textContent='Download for '+name;
-    var parts=['Version '+verLabel(rel.tag_name)];
-    if(rel.published_at){try{parts.push(new Date(rel.published_at).toLocaleDateString('en',{year:'numeric',month:'long',day:'numeric'}))}catch(e){}}
-    if(pick.size)parts.push(mb(pick.size));
-    var meta=parts.join(' · ');
-    if(state.sure)meta+=' · Looks like your Mac';
-    $('dl-meta').textContent=meta;
-    if(other){
-      var oname=want==='intel'?'Apple Silicon':'Intel';
-      alt.textContent='';
-      var q=document.createTextNode((want==='intel'?'Apple Silicon Mac? ':'Intel Mac? '));
-      var a=document.createElement('a');a.href=other.browser_download_url;a.setAttribute('data-dl',want==='intel'?'arm64':'x64');a.setAttribute('data-ver',verLabel(rel.tag_name).replace(/\s+/g,'-'));a.textContent='Download the '+oname+' build'+(other.size?' ('+mb(other.size)+')':'');
-      alt.appendChild(q);alt.appendChild(a);alt.hidden=false;
-    }else alt.hidden=true;
   }
   function renderNews(){
     var rel=state.rel;if(!rel)return;
@@ -449,24 +459,34 @@ var TELLTALE_CONFIG={
   }
 
   /* ---------- data: one fetch per visit ---------- */
+  function hasZips(r){return !!(r&&!r.draft&&(find(r,'AppleSilicon-arm64.zip')||find(r,'Intel-x64.zip')))}
   function pick(list){
     if(!Array.isArray(list))return null;
-    for(var i=0;i<list.length;i++)if(list[i]&&!list[i].draft)return list[i];
+    for(var i=0;i<list.length;i++)if(list[i]&&!list[i].draft&&hasZips(list[i]))return list[i];
     return null;
   }
+  function trim(x){return {tag_name:x.tag_name,name:x.name,draft:x.draft,prerelease:x.prerelease,published_at:x.published_at,html_url:x.html_url,body:x.body,assets:(x.assets||[]).map(function(a){return {name:a.name,size:a.size,browser_download_url:a.browser_download_url}})}}
+  /* A newer release replaces the known one; anything without zip assets is ignored, so the state never gets worse. */
+  function take(r){if(!hasZips(r))return false;state.rel=r;render();renderNews();fbLink();return true}
+  function getJSON(url,ms,opts){
+    var ctl=window.AbortController?new AbortController():null,t=setTimeout(function(){ctl&&ctl.abort()},ms);
+    opts=opts||{};if(ctl)opts.signal=ctl.signal;
+    return fetch(url,opts).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){clearTimeout(t);return j},function(e){clearTimeout(t);throw e});
+  }
   function load(){
-    try{var c=sessionStorage.getItem(KEY);if(c){var r=pick(JSON.parse(c));if(r){state.rel=r;render();renderNews();fbLink();return}}}catch(e){}
-    var ctl=window.AbortController?new AbortController():null,t=setTimeout(function(){ctl&&ctl.abort()},8000);
-    fetch(API,{headers:{Accept:'application/vnd.github+json'},signal:ctl?ctl.signal:undefined})
-      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
-      .then(function(list){
+    render();renderNews();fbLink(); // paint from the baked release first
+    try{var c=sessionStorage.getItem(KEY);if(c){var cr=JSON.parse(c);if(take(Array.isArray(cr)?pick(cr):cr))return}}catch(e){}
+    // 1) same-origin latest.json, 2) the GitHub API, 3) what is baked in
+    getJSON('latest.json',6000,{cache:'no-cache'}).then(function(j){
+      if(!take(j))throw new Error('none');
+      try{sessionStorage.setItem(KEY,JSON.stringify(j))}catch(e){}
+    }).catch(function(){
+      return getJSON(API,8000,{headers:{Accept:'application/vnd.github+json'}}).then(function(list){
         var r=pick(list);if(!r)throw new Error('none');
-        state.rel=r;
-        try{sessionStorage.setItem(KEY,JSON.stringify(list.slice(0,5).map(function(x){return {tag_name:x.tag_name,name:x.name,draft:x.draft,prerelease:x.prerelease,published_at:x.published_at,html_url:x.html_url,body:x.body,assets:(x.assets||[]).map(function(a){return {name:a.name,size:a.size,browser_download_url:a.browser_download_url}})}})))}catch(e){}
-        render();renderNews();fbLink();
-      })
-      .catch(function(){render()})
-      .then(function(){clearTimeout(t)});
+        take(trim(r));
+        try{sessionStorage.setItem(KEY,JSON.stringify(trim(r)))}catch(e){}
+      });
+    }).catch(function(){});
   }
 
   /* ---------- download click counting (GoatCounter; never blocks the link) ---------- */
