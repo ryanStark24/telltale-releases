@@ -1,0 +1,45 @@
+name: Feedback
+description: Tell us how Telltale went for you.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying Telltale. This issue is public, so please don't include org names, customer data or anything private.
+  - type: dropdown
+    id: rating
+    attributes:
+      label: How was Telltale for you?
+      options:
+        - 1 - It did not work for me
+        - 2 - Hard going
+        - 3 - Okay
+        - 4 - Good
+        - 5 - Great
+    validations:
+      required: true
+  - type: dropdown
+    id: use
+    attributes:
+      label: What do you use Telltale for?
+      options:
+        - Debugging failures
+        - QA testing
+        - Reviewing logs
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Telltale version
+      description: Shown in Settings › About.
+      placeholder: "1.7.4 beta"
+  - type: textarea
+    id: comments
+    attributes:
+      label: Comments
+      description: What worked, what didn't, what you wish it did.
+    validations:
+      required: true
