@@ -3,7 +3,7 @@
 /** A real download-click key (version required). Drops test rows such as download-arm64-test and the releases fallback. */
 export const REAL_KEY = /^download-(arm64|x64)-\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?$/;
 /** Countries with fewer clicks than this are folded into "Other" so no single person stands out. */
-export const MIN_COUNTRY_CLICKS = 3;
+export const MIN_COUNTRY_CLICKS = 1;
 
 const num = (v) => { const n = Math.round(Number(v)); return Number.isFinite(n) && n > 0 ? n : 0; };
 

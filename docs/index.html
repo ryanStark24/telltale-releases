@@ -346,7 +346,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
           <p class="st-big" id="st-big" aria-hidden="true">0</p>
           <p class="st-sub" id="st-sub"></p>
           <ul class="st-ver" id="st-ver" hidden></ul>
-          <p class="st-note">Total downloads are exact, counted by GitHub. Countries show downloads started from this page in the last 90 days; countries with only a few downloads are grouped as Other.</p>
+          <p class="st-note">Total downloads are exact, counted by GitHub. Countries show downloads started from this page in the last 90 days. Only the country is kept, never anything about who downloaded.</p>
         </div>
         <div class="panel" id="st-panel" hidden>
           <p class="st-cap">Where the downloads came from</p>
@@ -385,9 +385,9 @@ var TELLTALE_CONFIG={
     var sec=$('stats');if(!sec||!window.IntersectionObserver||!window.fetch)return;
     var started=false;
     var fmt=function(n){return n.toLocaleString('en-US')};
-    var flag=function(c){return /^[A-Z]{2}$/.test(c)?String.fromCodePoint(c.charCodeAt(0)+127397,c.charCodeAt(1)+127397):'\uD83C\uDF10'};
+    var flag=function(c){return c!=='ZZ'&&/^[A-Z]{2}$/.test(c)?String.fromCodePoint(c.charCodeAt(0)+127397,c.charCodeAt(1)+127397):'\uD83C\uDF10'};
     var names=null;try{names=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
-    var nameOf=function(c){if(c==='ZZ')return'Other countries';try{return(names&&names.of(c))||c}catch(e){return c}};
+    var nameOf=function(c){if(c==='ZZ')return'Unknown location';try{return(names&&names.of(c))||c}catch(e){return c}};
     var el=function(t,cls,txt){var e=document.createElement(t);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
     function countUp(node,to){
       node.textContent=fmt(to);
