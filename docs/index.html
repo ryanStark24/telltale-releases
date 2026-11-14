@@ -340,7 +340,7 @@ var TELLTALE_CONFIG={
   var KEY='telltale-releases-v2';
   var $=function(id){return document.getElementById(id)};
   /* The current release, rewritten by scripts/update-latest.mjs on every release. The download never depends on the network. */
-  var BAKED=/*baked:json*/{"tag_name":"v1.7.4-beta.1","published_at":"2026-11-13T02:04:37Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.7.4-beta.1","prerelease":true,"assets":[{"name":"Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip","size":134234939,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip"},{"name":"Telltale-1.7.4-beta.1-mac-Intel-x64.zip","size":141211794,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip"}]}/*baked:end*/;
+  var BAKED=/*baked:json*/{"tag_name":"v1.7.4-beta.1","published_at":"2026-11-13T02:04:37Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.7.4-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip","size":134234939,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip"},{"name":"Telltale-1.7.4-beta.1-mac-Intel-x64.zip","size":141211794,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip"}]}/*baked:end*/;
   var state={arch:'arm',rel:BAKED,sure:false};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
