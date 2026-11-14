@@ -1,0 +1,17 @@
+# Cloudflare Pages project config, kept at the ROOT of the telltale-releases repo (next to docs/ and functions/).
+# With pages_build_output_dir set, Cloudflare reads bindings from this file.
+name = "telltale-releases"
+pages_build_output_dir = "docs"
+compatibility_date = "2026-01-01"
+
+# Per-IP limit store for /api/feedback. Create with: wrangler kv namespace create RATE, then paste the id.
+[[kv_namespaces]]
+binding = "RATE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Download counts by country (Workers Analytics Engine). The dataset is created on first write.
+[[analytics_engine_datasets]]
+binding = "HITS"
+dataset = "telltale_hits"
+
+# Secrets (set in the dashboard, never in this file): TURNSTILE_SECRET, GITHUB_TOKEN

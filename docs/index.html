@@ -10,8 +10,6 @@
 <meta property="og:title" content="Telltale — download for Mac">
 <meta property="og:description" content="A Mac app for Salesforce developers and QAs. It reads your org, tickets, code and debug logs and tells you what is going on.">
 <meta name="twitter:card" content="summary">
-<!-- Analytics: GoatCounter (no cookies, no personal data). PLACEHOLDER: replace "telltale" in the URL below with your GoatCounter site code. -->
-<script data-goatcounter="https://telltale.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
 :root{
@@ -329,10 +327,11 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 </footer>
 
 <script>
-/* ---- Setup: replace these two placeholders (see worker/SETUP.md). While either is a placeholder the form shows only the GitHub link. ---- */
+/* ---- Setup: replace the placeholders (see worker/SETUP.md). While either is a placeholder the form shows only the GitHub link. ---- */
 var TELLTALE_CONFIG={
-  FEEDBACK_ENDPOINT:'FEEDBACK_ENDPOINT', // e.g. https://telltale-feedback.<account>.workers.dev
-  TURNSTILE_SITE_KEY:'TURNSTILE_SITE_KEY'
+  FEEDBACK_ENDPOINT:'/api/feedback', // same-origin Pages Function (functions/api/feedback.js); no CORS needed
+  TURNSTILE_SITE_KEY:'TURNSTILE_SITE_KEY', // PLACEHOLDER: the Turnstile widget's site key
+  CF_ANALYTICS_TOKEN:'CF_ANALYTICS_TOKEN' // PLACEHOLDER: only if you add the Web Analytics snippet by hand; leave as is if you turn on Pages' automatic Web Analytics
 };
 (function(){
   var REL='https://github.com/ryanStark24/telltale-releases/releases';
@@ -489,15 +488,16 @@ var TELLTALE_CONFIG={
     }).catch(function(){});
   }
 
-  /* ---------- download click counting (GoatCounter; never blocks the link) ---------- */
+  /* ---------- download click counting: a tiny same-origin beacon (never blocks the link) ---------- */
   document.addEventListener('click',function(e){
     try{
       var a=e.target.closest&&e.target.closest('a[data-dl]');if(!a)return;
-      var kind=a.getAttribute('data-dl'),v=a.getAttribute('data-ver')||'unknown';
-      var gc=window.goatcounter;
-      if(gc&&typeof gc.count==='function')gc.count({path:'download-'+kind+'-'+v,title:'Download '+kind+' '+v,event:true});
+      var k='download-'+a.getAttribute('data-dl')+'-'+(a.getAttribute('data-ver')||'unknown');
+      if(navigator.sendBeacon)navigator.sendBeacon('/api/hit?k='+encodeURIComponent(k));
     }catch(err){}
   },true);
+  /* ---------- Cloudflare Web Analytics: only when a token is set here. Pages' automatic Web Analytics needs no code. ---------- */
+  (function(){var t=TELLTALE_CONFIG.CF_ANALYTICS_TOKEN;if(!t||t.indexOf('CF_')===0)return;var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon',JSON.stringify({token:t}));document.head.appendChild(s)})();
 
   /* ---------- feedback: rating row prefills the GitHub issue form ---------- */
   var RATES=[['1 - It did not work for me','Not for me'],['2 - Hard going','Hard going'],['3 - Okay','Okay'],['4 - Good','Good'],['5 - Great','Great']];
@@ -522,7 +522,7 @@ var TELLTALE_CONFIG={
   })();
 
   (function(){
-    var C=TELLTALE_CONFIG,ok=/^https:\/\//.test(C.FEEDBACK_ENDPOINT)&&C.FEEDBACK_ENDPOINT.indexOf('FEEDBACK_ENDPOINT')<0&&C.TURNSTILE_SITE_KEY&&C.TURNSTILE_SITE_KEY!=='TURNSTILE_SITE_KEY';
+    var C=TELLTALE_CONFIG,ok=/^\//.test(C.FEEDBACK_ENDPOINT)&&C.TURNSTILE_SITE_KEY&&C.TURNSTILE_SITE_KEY!=='TURNSTILE_SITE_KEY';
     if(!ok)return; // page works before setup: GitHub link only
     var form=$('fb-form'),st=$('fb-status'),tok='',wid=null,send=$('fb-send');
     $('fb-fields').hidden=false;$('fb-gh').hidden=true;
