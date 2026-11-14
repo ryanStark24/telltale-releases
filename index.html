@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telltale has moved</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://telltale-app.pages.dev/">
+<meta http-equiv="refresh" content="0; url=https://telltale-app.pages.dev/">
+<style>
+  :root{--bg:oklch(0.995 0 60);--fg:oklch(0.22 0 60);--muted:oklch(0.47 0 60)}
+  @media (prefers-color-scheme:dark){:root{--bg:oklch(0.225 0 60);--fg:oklch(0.9 0 75);--muted:oklch(0.72 0 70)}}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--fg);font:17px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;padding:16px;text-align:center}
+  a{color:inherit;font-weight:600;text-underline-offset:4px}
+  a:focus-visible{outline:2px solid oklch(0.52 0.17 280);outline-offset:3px}
+  p{margin:0 0 8px}.m{color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <p><strong>Telltale has moved.</strong></p>
+  <p>Continue to <a id="go" href="https://telltale-app.pages.dev/">https://telltale-app.pages.dev</a></p>
+  <p class="m">If you are not taken there in a moment, use the link.</p>
+</main>
+<script>
+  (function () {
+    var base = 'https://telltale-app.pages.dev'.replace(/\/+$/, '');
+    var path = location.pathname.replace(/^\/telltale-releases/, '').replace(/index\.html$/, '') || '/';
+    var url = base + path + location.search + location.hash;
+    var a = document.getElementById('go'); if (a) a.href = url;
+    location.replace(url);
+  })();
+</script>
+</body>
+</html>
