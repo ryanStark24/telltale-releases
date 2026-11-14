@@ -14,4 +14,9 @@ id = "6634e2c074e8474f806a305e4472d9e6"
 binding = "HITS"
 dataset = "telltale_hits"
 
-# Secrets (set in the dashboard, never in this file): TURNSTILE_SECRET, GITHUB_TOKEN
+# Plain variable, not a secret: the owner's Cloudflare account id, used by /api/stats to query Analytics Engine.
+[vars]
+CF_ACCOUNT_ID = "f6d88acf223c4d4995b9ea145fa01ff0"
+
+# Secrets (set in the dashboard, never in this file): TURNSTILE_SECRET, GITHUB_TOKEN,
+# CF_API_TOKEN (API token with Account > Account Analytics > Read, for /api/stats)

@@ -192,6 +192,27 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
   .live{margin-left:auto}
 }
 @media (max-width:560px){.dls{flex-direction:column;width:100%}.btn{width:100%;justify-content:center;padding:14px 18px}.cta{width:100%}.latest{font-size:15px}}
+/* public stats */
+.st{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 40px;align-items:start}
+.st h2{margin-bottom:14px}
+.st-big{margin:0;font-size:clamp(56px,11vw,104px);line-height:1;letter-spacing:-.05em;font-weight:700;font-variant-numeric:tabular-nums;background:linear-gradient(95deg,var(--trace-a),var(--trace-b) 50%,var(--trace-c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.st-sub{margin:10px 0 0;font-size:clamp(17px,2.2vw,21px);color:var(--fg-2)}
+.st-ver{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:4px;font-size:14.5px;color:var(--fg-muted)}
+.st-ver[hidden]{display:none}
+.st-ver b{font:13.5px var(--mono);color:var(--fg-2);font-weight:400;margin-right:8px}
+.st-note{margin:16px 0 0;font-size:14px;color:var(--fg-muted);max-width:34em}
+.st-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.st-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:baseline;font-size:16px}
+.st-name{display:flex;gap:10px;align-items:baseline;min-width:0;color:var(--fg)}
+.st-name span:first-child{font-size:20px;line-height:1}
+.st-name span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-n{font-variant-numeric:tabular-nums;color:var(--fg-2);font-size:15px}
+.st-bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--bg-muted);overflow:hidden}
+.st-bar i{display:block;height:100%;min-width:8px;border-radius:99px;background:linear-gradient(90deg,var(--trace-a),var(--trace-c));transform-origin:left;animation:stgrow .9s var(--ease) both}
+@keyframes stgrow{from{transform:scaleX(0)}}
+.st-cap{margin:0 0 16px;font-weight:600;font-size:14.5px}
+@media (max-width:820px){.st{grid-template-columns:1fr}}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -317,11 +338,27 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         </div>
       </div>
     </section>
+
+    <section aria-labelledby="st" id="stats" hidden>
+      <div class="st">
+        <div>
+          <h2 id="st">Downloaded around the world.</h2>
+          <p class="st-big" id="st-big" aria-hidden="true">0</p>
+          <p class="st-sub" id="st-sub"></p>
+          <ul class="st-ver" id="st-ver" hidden></ul>
+          <p class="st-note">Total downloads are exact, counted by GitHub. Countries show downloads started from this page in the last 90 days; countries with only a few downloads are grouped as Other.</p>
+        </div>
+        <div class="panel" id="st-panel" hidden>
+          <p class="st-cap">Where the downloads came from</p>
+          <ul class="st-list" id="st-list"></ul>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 <footer>
   <div class="wrap">
-    <span>Telltale for Mac. This page counts visits and download clicks without cookies or personal data.</span>
+    <span>Telltale for Mac. This page counts visits and downloads without cookies or personal data.</span>
     <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
   </div>
 </footer>
@@ -331,7 +368,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 var TELLTALE_CONFIG={
   FEEDBACK_ENDPOINT:'/api/feedback', // same-origin Pages Function (functions/api/feedback.js); no CORS needed
   TURNSTILE_SITE_KEY:'0x4AAAAAAGAkESdd8G3tJB0M', // PLACEHOLDER: the Turnstile widget's site key
-  CF_ANALYTICS_TOKEN:'5dbbf8b9ecef423c86c88f769d7a86ba' // PLACEHOLDER: only if you add the Web Analytics snippet by hand; leave as is if you turn on Pages' automatic Web Analytics
+  CF_ANALYTICS_TOKEN:'CF_ANALYTICS_TOKEN' // PLACEHOLDER: only if you add the Web Analytics snippet by hand; leave as is if you turn on Pages' automatic Web Analytics
 };
 (function(){
   var REL='https://github.com/ryanStark24/telltale-releases/releases';
@@ -342,6 +379,57 @@ var TELLTALE_CONFIG={
   var BAKED=/*baked:json*/{"tag_name":"v1.7.4-beta.1","published_at":"2026-11-13T02:04:37Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.7.4-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip","size":134234939,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip"},{"name":"Telltale-1.7.4-beta.1-mac-Intel-x64.zip","size":141211794,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip"}]}/*baked:end*/;
   var state={arch:'arm',rel:BAKED,sure:false};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- public stats: one lazy fetch; any failure leaves the section hidden ---------- */
+  (function(){
+    var sec=$('stats');if(!sec||!window.IntersectionObserver||!window.fetch)return;
+    var started=false;
+    var fmt=function(n){return n.toLocaleString('en-US')};
+    var flag=function(c){return /^[A-Z]{2}$/.test(c)?String.fromCodePoint(c.charCodeAt(0)+127397,c.charCodeAt(1)+127397):'\uD83C\uDF10'};
+    var names=null;try{names=new Intl.DisplayNames(['en'],{type:'region'})}catch(e){}
+    var nameOf=function(c){if(c==='ZZ')return'Other countries';try{return(names&&names.of(c))||c}catch(e){return c}};
+    var el=function(t,cls,txt){var e=document.createElement(t);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+    function countUp(node,to){
+      node.textContent=fmt(to);
+      if(reduce||to<2)return;
+      var t0=performance.now(),dur=Math.min(1400,500+to*8);
+      (function f(now){var p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);node.textContent=fmt(Math.round(to*e));if(p<1)requestAnimationFrame(f)})(t0);
+    }
+    function render(d){
+      var total=Math.max(0,Math.floor(Number(d.totalDownloads)||0));
+      var cc=Array.isArray(d.clicksByCountry)?d.clicksByCountry.filter(function(r){return r&&r.clicks>0&&typeof r.country==='string'}):[];
+      var n=Math.max(0,Math.floor(Number(d.countries)||0));
+      if(!total&&!cc.length)return false;
+      var big=$('st-big');big.setAttribute('aria-label',fmt(total));
+      $('st-sub').textContent=(total===1?'download':'downloads')+(n>0?' from '+n+(n===1?' country':' countries'):' so far');
+      big.removeAttribute('aria-hidden');big.setAttribute('role','img');
+      var vs=(Array.isArray(d.byVersion)?d.byVersion:[]).slice(0,3),ul=$('st-ver');
+      vs.forEach(function(v){var a=+v.arm64||0,x=+v.x64||0;if(a+x<1)return;
+        var li=el('li');li.appendChild(el('b',null,v.version));
+        li.appendChild(document.createTextNode(fmt(a)+' Apple silicon · '+fmt(x)+' Intel'));ul.appendChild(li)});
+      ul.hidden=!ul.children.length;
+      if(cc.length){
+        var oth=cc.filter(function(r){return r.country==='ZZ'}),top=cc.filter(function(r){return r.country!=='ZZ'}).slice(0,oth.length?7:8).concat(oth),max=Math.max.apply(null,top.map(function(r){return r.clicks})),list=$('st-list');
+        top.forEach(function(r){
+          var li=el('li','st-row'),nm=el('span','st-name');
+          var f=el('span',null,flag(r.country));f.setAttribute('aria-hidden','true');
+          nm.appendChild(f);nm.appendChild(el('span',null,nameOf(r.country)));
+          li.appendChild(nm);li.appendChild(el('span','st-n',fmt(r.clicks)+(r.clicks===1?' download':' downloads')));
+          var bar=el('span','st-bar');bar.setAttribute('aria-hidden','true');
+          var i=el('i');i.style.width=Math.max(6,Math.round(r.clicks/max*100))+'%';bar.appendChild(i);
+          li.appendChild(bar);list.appendChild(li)});
+        $('st-panel').hidden=false;
+      }
+      sec.hidden=false;
+      countUp(big,total);
+      return true;
+    }
+    new IntersectionObserver(function(es,io){
+      if(started||!es.some(function(e){return e.isIntersecting}))return;
+      started=true;io.disconnect();
+      fetch('/api/stats',{headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(render).catch(function(){});
+    },{rootMargin:'300px 0px'}).observe($('feedback'));
+  })();
 
   /* ---------- window: replay + tilt ---------- */
   var win=$('win');
