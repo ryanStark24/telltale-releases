@@ -7,7 +7,7 @@ compatibility_date = "2026-01-01"
 # Per-IP limit store for /api/feedback. Create with: wrangler kv namespace create RATE, then paste the id.
 [[kv_namespaces]]
 binding = "RATE"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "6634e2c074e8474f806a305e4472d9e6"
 
 # Download counts by country (Workers Analytics Engine). The dataset is created on first write.
 [[analytics_engine_datasets]]
