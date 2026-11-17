@@ -9,19 +9,32 @@ export const RATE_WINDOW_S = 3600;
 const VERSION_RE = /^\d+\.\d+\.\d+(-beta\.\d+)?$/;
 const HIT_RE = /^download-(arm64|x64|releases)-[0-9A-Za-z.\-]{1,24}$/;
 
+/** What a message is. Absent means feedback, so clients from before kinds existed keep working. */
+export const KINDS = ['feedback', 'bug', 'feature', 'question'];
+
 /** Returns { ok:true, data } or { ok:false, error }. Pure: no network. */
 export function validate(body) {
   if (!body || typeof body !== 'object') return { ok: false, error: 'bad_request' };
   if (typeof body.website === 'string' && body.website !== '') return { ok: false, error: 'rejected' }; // honeypot
-  const rating = body.rating;
-  if (!Number.isInteger(rating) || rating < 1 || rating > 5) return { ok: false, error: 'bad_rating' };
-  if (!USES.includes(body.use)) return { ok: false, error: 'bad_use' };
+  const kind = body.kind == null || body.kind === '' ? 'feedback' : body.kind;
+  if (!KINDS.includes(kind)) return { ok: false, error: 'bad_kind' };
+  let rating = null;
+  if (kind === 'feedback') {
+    rating = body.rating;
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) return { ok: false, error: 'bad_rating' };
+  }
+  // "What do you use Telltale for" is required for feedback and optional for everything else.
+  let use = '';
+  if (kind === 'feedback' || (body.use != null && body.use !== '')) {
+    if (!USES.includes(body.use)) return { ok: false, error: 'bad_use' };
+    use = body.use;
+  }
   const version = body.version == null ? '' : body.version;
   if (typeof version !== 'string' || (version !== '' && !VERSION_RE.test(version))) return { ok: false, error: 'bad_version' };
   const comments = typeof body.comments === 'string' ? body.comments.trim() : '';
   if (comments.length < 1 || comments.length > 2000) return { ok: false, error: 'bad_comments' };
   if (typeof body.turnstile !== 'string' || body.turnstile.length < 1 || body.turnstile.length > 2048) return { ok: false, error: 'bad_check' };
-  return { ok: true, data: { rating, use: body.use, version, comments, turnstile: body.turnstile } };
+  return { ok: true, data: { kind, rating, use, version, comments, turnstile: body.turnstile } };
 }
 
 /** A download-click key such as download-arm64-1.7.4-beta. Anything else is dropped. */
@@ -35,17 +48,51 @@ export function neutralise(text) {
   return `${fence}text\n${t}\n${fence}`;
 }
 
-export function buildIssue({ rating, use, version, comments }) {
-  const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-  const labels = ['', 'It did not work for me', 'Hard going', 'Okay', 'Good', 'Great'];
+/**
+ * One line of user text made safe for an issue title: no newlines or control characters, no @mentions,
+ * no markdown or HTML punctuation, cut at `max` characters (whole characters, never half an emoji).
+ */
+export function titleText(text, max = 60) {
+  const t = String(text)
+    .replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028\u2029\ufeff]/g, ' ')
+    .replace(/@/g, ' ')
+    .replace(/[`*_~#<>\[\]()!|\\]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const chars = Array.from(t);
+  return chars.length > max ? chars.slice(0, max).join('').trimEnd() + '…' : t;
+}
+
+const KIND_META = {
+  bug: { title: 'Bug', label: 'bug', heading: 'What happened, and what did you expect?' },
+  feature: { title: 'Feature idea', label: 'enhancement', heading: 'The idea' },
+  question: { title: 'Question', label: 'question', heading: 'Question' },
+};
+
+export function buildIssue({ kind = 'feedback', rating, use, version, comments }) {
+  const meta = KIND_META[kind];
+  if (!meta) {
+    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    const labels = ['', 'It did not work for me', 'Hard going', 'Okay', 'Good', 'Great'];
+    return {
+      title: `Feedback: ${stars} · ${titleText(use, 40).toLowerCase()}${version ? ' · ' + version : ''}`,
+      labels: ['feedback'],
+      body: [
+        '### How was Telltale for you?', '', `${rating} - ${labels[rating]}`, '',
+        '### What do you use Telltale for?', '', use, '',
+        '### Telltale version', '', version || '_No response_', '',
+        '### Comments', '', neutralise(comments), '',
+      ].join('\n'),
+    };
+  }
+  const summary = titleText(comments, 60);
   return {
-    title: `Feedback: ${stars} · ${use.toLowerCase()}${version ? ' · ' + version : ''}`,
-    labels: ['feedback'],
+    title: `${meta.title}:${summary ? ' ' + summary : ''}${version ? ' · ' + version : ''}`,
+    labels: [meta.label],
     body: [
-      '### How was Telltale for you?', '', `${rating} - ${labels[rating]}`, '',
-      '### What do you use Telltale for?', '', use, '',
+      `### ${meta.heading}`, '', neutralise(comments), '',
       '### Telltale version', '', version || '_No response_', '',
-      '### Comments', '', neutralise(comments), '',
+      ...(use ? ['### What do you use Telltale for?', '', use, ''] : []),
     ].join('\n'),
   };
 }

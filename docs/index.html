@@ -152,6 +152,8 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 .rate{border:0;margin:0 0 18px;padding:0;min-width:0}
 .rate legend{font-weight:600;margin-bottom:12px;padding:0}
 .rate-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.rate-row.k4{grid-template-columns:repeat(4,1fr)}.rate-row.k4 span{min-height:48px;justify-content:center;font-size:14px;color:var(--fg)}
+.rate[hidden]{display:none}
 .rate label{position:relative;display:block;cursor:pointer}
 .rate input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
 .rate span{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border:1px solid var(--line);border-radius:12px;background:var(--bg-raised);font-size:13px;color:var(--fg-muted);text-align:center;line-height:1.2;min-height:76px;transition:transform .18s var(--ease),border-color .18s,background .18s}
@@ -180,7 +182,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 #fb-send{background:var(--accent);color:var(--on-accent);border-color:transparent}
 #fb-send[disabled]{opacity:.6;cursor:progress}
 .gh{margin:14px 0 0}#ts-box{margin:0 0 14px}
-@media (max-width:560px){.f2{grid-template-columns:1fr}}
+@media (max-width:560px){.f2{grid-template-columns:1fr}.rate-row.k4{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){.fb{grid-template-columns:1fr}.rate span{font-size:12px;min-height:70px}.btn.quiet{width:100%;justify-content:center}}
 @media (max-width:360px){.rate-row{gap:5px}.rate span{font-size:11px;padding:10px 2px}}
 @media (max-width:820px){
@@ -311,19 +313,22 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 
     <section aria-labelledby="fb" id="feedback">
       <div class="fb">
-        <div><h2 id="fb">Tell us how it went.</h2><p class="lead">Pick a rating and add a few words. No account needed. It takes about a minute and it shapes what gets fixed next.</p></div>
+        <div><h2 id="fb">Tell us how it went.</h2><p class="lead">Rate it, report a bug, suggest a feature or ask a question. No account needed. It takes about a minute and it shapes what gets fixed next.</p></div>
         <div class="panel">
           <form id="fb-form" novalidate>
-            <fieldset class="rate"><legend>How was Telltale for you?</legend>
+            <fieldset class="rate"><legend>What is this?</legend>
+              <div class="rate-row k4" id="kind-row"></div>
+            </fieldset>
+            <fieldset class="rate" id="rate-fs"><legend>How was Telltale for you?</legend>
               <div class="rate-row" id="rate-row"></div>
             </fieldset>
             <div id="fb-fields" hidden>
               <div class="f2">
-                <div class="fld"><label for="fb-use">What do you use Telltale for?</label>
+                <div class="fld"><label for="fb-use" id="fb-use-l">What do you use Telltale for?</label>
                   <select id="fb-use" name="use" required><option value="">Choose one</option><option>Debugging failures</option><option>QA testing</option><option>Reviewing logs</option><option>Other</option></select></div>
                 <div class="fld"><label for="fb-ver">Telltale version</label><input id="fb-ver" name="version" type="text" inputmode="text" autocomplete="off" placeholder="1.7.4-beta.1" maxlength="20"></div>
               </div>
-              <div class="fld"><label for="fb-msg">Comments</label>
+              <div class="fld"><label for="fb-msg" id="fb-msg-l">Comments</label>
                 <textarea id="fb-msg" name="comments" rows="4" maxlength="2000" required placeholder="What worked, what didn’t, what you wish it did."></textarea>
                 <span class="count" id="fb-count" aria-hidden="true">0 / 2000</span></div>
               <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" id="fb-hp" tabindex="-1" autocomplete="off"></label></div>
@@ -589,16 +594,39 @@ var TELLTALE_CONFIG={
 
   /* ---------- feedback: rating row prefills the GitHub issue form ---------- */
   var RATES=[['1 - It did not work for me','Not for me'],['2 - Hard going','Hard going'],['3 - Okay','Okay'],['4 - Good','Good'],['5 - Great','Great']];
-  var FB='https://github.com/ryanStark24/telltale-releases/issues/new?template=feedback.yml';
+  var KINDS=[
+    {k:'feedback',name:'Feedback',tpl:'feedback.yml',cmt:'Comments',ph:'What worked, what didn’t, what you wish it did.',send:'Send feedback',done:'Your feedback was sent.'},
+    {k:'bug',name:'Bug',tpl:'bug_report.yml',cmt:'What happened, and what did you expect?',ph:'What happened, what you expected, and the steps to get there.',send:'Send bug report',done:'Your bug report was sent.'},
+    {k:'feature',name:'Feature idea',tpl:'feature_request.yml',cmt:'What is the idea?',ph:'The problem you have, your idea, and how you would use it.',send:'Send idea',done:'Your idea was sent.'},
+    {k:'question',name:'Question',tpl:'question.yml',cmt:'What would you like to know?',ph:'Ask anything about how Telltale works.',send:'Send question',done:'Your question was sent.'}
+  ];
+  var kind=KINDS[0];
+  var FB='https://github.com/ryanStark24/telltale-releases/issues/new?template=';
   var rating='';
   function fbLink(){
-    var u=FB;
+    var u=FB+kind.tpl;
     if(state.rel)u+='&version='+encodeURIComponent(String(state.rel.tag_name).replace(/^v/i,''));
-    if(rating)u+='&rating='+encodeURIComponent(rating);
+    if(rating&&kind.k==='feedback')u+='&rating='+encodeURIComponent(rating);
     $('fb-link').href=u;
     var v=$('fb-ver');if(v&&!v.dataset.touched&&state.rel)v.value=verLabel(state.rel.tag_name).replace(/ beta ?(\d*)/,function(m,n){return '-beta.'+(n||'1')});
   }
   (function(){
+    var kr=$('kind-row');
+    KINDS.forEach(function(kd,i){
+      var l=document.createElement('label'),inp=document.createElement('input'),sp=document.createElement('span');
+      inp.type='radio';inp.name='kind';inp.value=kd.k;inp.checked=i===0;
+      sp.textContent=kd.name;
+      inp.addEventListener('change',function(){
+        kind=kd;$('rate-fs').hidden=kd.k!=='feedback';
+        $('fb-msg-l').textContent=kd.cmt;$('fb-msg').placeholder=kd.ph;
+        $('fb-use-l').textContent='What do you use Telltale for?'+(kd.k==='feedback'?'':' (optional)');
+        $('fb-use').options[0].textContent=kd.k==='feedback'?'Choose one':'Skip';
+        $('fb-send').textContent=kd.send;$('fb-thanks-text').textContent=kd.done;
+        $('fb-status').textContent='';$('fb-status').className='status';
+        fbLink();
+      });
+      l.appendChild(inp);l.appendChild(sp);kr.appendChild(l);
+    });
     var row=$('rate-row');
     RATES.forEach(function(r,i){
       var l=document.createElement('label'),inp=document.createElement('input'),sp=document.createElement('span'),b=document.createElement('b');
@@ -623,15 +651,15 @@ var TELLTALE_CONFIG={
     function fail(t){msg(t,true);$('fb-gh').hidden=false;send.disabled=false;try{window.turnstile&&window.turnstile.reset(wid)}catch(e){};tok=''}
     form.addEventListener('submit',function(e){
       e.preventDefault();
-      var r=parseInt(rating,10),use=$('fb-use').value,com=$('fb-msg').value.trim();
-      if(!r){msg('Pick a rating first.',true);return}
-      if(!use){msg('Choose what you use Telltale for.',true);return}
+      var fbk=kind.k==='feedback',r=parseInt(rating,10),use=$('fb-use').value,com=$('fb-msg').value.trim();
+      if(fbk&&!r){msg('Pick a rating first.',true);return}
+      if(fbk&&!use){msg('Choose what you use Telltale for.',true);return}
       if(!com){msg('Add a few words in Comments.',true);return}
       if(!tok){msg('Please complete the check below first.',true);return}
       send.disabled=true;msg('Sending…');
       var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},15000);
       fetch(C.FEEDBACK_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,
-        body:JSON.stringify({rating:r,use:use,version:$('fb-ver').value.trim(),comments:com,website:$('fb-hp').value,turnstile:tok})})
+        body:JSON.stringify({kind:kind.k,rating:fbk?r:undefined,use:use,version:$('fb-ver').value.trim(),comments:com,website:$('fb-hp').value,turnstile:tok})})
       .then(function(x){return x.json().catch(function(){return {}}).then(function(j){if(!x.ok||!j.ok)throw new Error(j.error||x.status);return j})})
       .then(function(j){
         form.hidden=true;$('fb-gh').hidden=true;var th=$('fb-thanks');th.hidden=false;
