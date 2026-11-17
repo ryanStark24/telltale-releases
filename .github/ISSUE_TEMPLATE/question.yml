@@ -1,0 +1,22 @@
+name: Question
+description: Ask how something in Telltale works.
+title: "Question: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public, so please don't include org names, customer data or anything private.
+  - type: textarea
+    id: question
+    attributes:
+      label: What would you like to know?
+      description: Add what you already tried, if anything.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Telltale version
+      description: Shown in Settings › About.
+      placeholder: "1.7.4 beta"
