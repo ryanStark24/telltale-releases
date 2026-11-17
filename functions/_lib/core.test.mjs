@@ -76,3 +76,43 @@ test('body fence grows past backticks in user text', () => {
   assert.match(i.body, /`````text\nx ```` y\n`````/);
 });
 test('KINDS', () => assert.deepEqual(KINDS, ['feedback', 'bug', 'feature', 'question']));
+
+// ---- click beacon: strict origin, per-hour cache key ----
+import { strictSameOrigin, hitCacheKey } from './core.js';
+const req = (origin) => new Request('https://dl.example.com/api/hit?k=download-arm64-1.7.4-beta', { method: 'POST', headers: origin === undefined ? {} : { Origin: origin } });
+test('strictSameOrigin needs an Origin that matches the host', () => {
+  assert.equal(strictSameOrigin(req('https://dl.example.com')), true);
+  assert.equal(strictSameOrigin(req()), false); // missing Origin is refused here
+  assert.equal(strictSameOrigin(req('https://evil.example.org')), false);
+  assert.equal(strictSameOrigin(req('https://dl.example.com.evil.org')), false);
+  assert.equal(strictSameOrigin(req('null')), false);
+  assert.equal(strictSameOrigin(req('not a url')), false);
+});
+test('hitCacheKey: stable, hashed, one per ip + key + hour', async () => {
+  const t = Date.UTC(2026, 10, 17, 10, 30);
+  const a = await hitCacheKey('203.0.113.7', 'download-arm64-1.7.4-beta', t);
+  assert.match(a, /^https:\/\/telltale-hits\.internal\/h\/[0-9a-f]{64}$/);
+  assert.ok(!a.includes('203.0.113.7'));
+  assert.equal(a, await hitCacheKey('203.0.113.7', 'download-arm64-1.7.4-beta', t + 20 * 60 * 1000)); // same hour
+  assert.notEqual(a, await hitCacheKey('203.0.113.7', 'download-arm64-1.7.4-beta', t + 40 * 60 * 1000)); // next hour
+  assert.notEqual(a, await hitCacheKey('203.0.113.8', 'download-arm64-1.7.4-beta', t));
+  assert.notEqual(a, await hitCacheKey('203.0.113.7', 'download-x64-1.7.4-beta', t));
+});
+
+import { onRequestPost as hit } from '../api/hit.js';
+test('/api/hit counts once per ip per key per hour, only same-origin, always 204', async () => {
+  const store = new Map();
+  globalThis.caches = { default: { match: async (r) => store.get(r.url), put: async (r, res) => { store.set(r.url, res); } } };
+  const points = [];
+  const env = { HITS: { writeDataPoint: (p) => points.push(p) } };
+  const call = (origin, ip, k = 'download-arm64-1.7.4-beta') => hit({ env, request: new Request(`https://dl.example.com/api/hit?k=${k}`, { method: 'POST', headers: { ...(origin ? { Origin: origin } : {}), 'CF-Connecting-IP': ip } }) });
+  try {
+    for (const r of [await call('https://dl.example.com', '198.51.100.1'), await call('https://dl.example.com', '198.51.100.1'), await call(null, '198.51.100.2'), await call('https://evil.example.org', '198.51.100.3'), await call('https://dl.example.com', '198.51.100.1', 'bogus')]) assert.equal(r.status, 204);
+    assert.equal(points.length, 1);
+    assert.deepEqual(points[0].blobs, ['download-arm64-1.7.4-beta', 'XX']);
+    await call('https://dl.example.com', '198.51.100.1', 'download-x64-1.7.4-beta'); // other key counts
+    await call('https://dl.example.com', '198.51.100.4'); // other ip counts
+    assert.equal(points.length, 3);
+    assert.ok([...store.keys()].every((u) => !u.includes('198.51.100')));
+  } finally { delete globalThis.caches; }
+});
