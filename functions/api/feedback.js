@@ -4,6 +4,8 @@ import { MAX_BODY, REPO, buildIssue, json, rateLimited, sameOrigin, validate } f
 
 export async function onRequestPost({ request, env }) {
   if (!sameOrigin(request)) return json({ ok: false, error: 'origin' }, 403);
+  const len = Number(request.headers.get('Content-Length'));
+  if (Number.isFinite(len) && len > MAX_BODY) return json({ ok: false, error: 'too_large' }, 413);
   const raw = await request.text();
   if (raw.length > MAX_BODY) return json({ ok: false, error: 'too_large' }, 413);
   let body;

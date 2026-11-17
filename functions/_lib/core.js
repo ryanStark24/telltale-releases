@@ -104,6 +104,25 @@ export function sameOrigin(request) {
   try { return new URL(o).host === new URL(request.url).host; } catch { return false; }
 }
 
+/** Strict variant for the click beacon: the Origin header must be present and be this site. A missing Origin is refused. */
+export function strictSameOrigin(request) {
+  const o = request.headers.get('Origin');
+  if (!o) return false;
+  try { return new URL(o).host === new URL(request.url).host; } catch { return false; }
+}
+
+export const HIT_WINDOW_S = 3600;
+
+/**
+ * Cache key for "this IP already counted this key this hour": a synthetic URL holding only a SHA-256 hex of
+ * ip + key + hour bucket, so the IP itself is never stored anywhere.
+ */
+export async function hitCacheKey(ip, key, nowMs = Date.now()) {
+  const bytes = new TextEncoder().encode(`${ip}|${key}|${Math.floor(nowMs / (HIT_WINDOW_S * 1000))}`);
+  const hex = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map((b) => b.toString(16).padStart(2, '0')).join('');
+  return `https://telltale-hits.internal/h/${hex}`;
+}
+
 export const json = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 
 /** Per-IP limit on Workers KV (binding RATE). Not atomic; enough to stop casual abuse. */
