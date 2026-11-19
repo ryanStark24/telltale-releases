@@ -148,6 +148,8 @@ h2{margin:0 0 clamp(24px,4vw,44px);font-size:clamp(28px,4.6vw,48px);line-height:
 footer{margin-top:clamp(72px,10vw,130px);border-top:1px solid var(--line);padding:30px 0 48px;font-size:15px;color:var(--fg-muted)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
 footer a{color:var(--fg-2);text-underline-offset:4px}
+.foot-note{max-width:44em}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 24px}
 
 .fb{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 40px;align-items:start}
 .fb h2{margin-bottom:14px}
@@ -186,6 +188,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 #fb-send{background:var(--accent);color:var(--on-accent);border-color:transparent}
 #fb-send[disabled]{opacity:.6;cursor:progress}
 .gh{margin:14px 0 0}#ts-box{margin:0 0 14px}
+.fb-note{margin:0;font-size:14px;color:var(--fg-muted);max-width:34em}
 @media (max-width:560px){.f2{grid-template-columns:1fr}.rate-row.k4{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){.fb{grid-template-columns:1fr}.rate span{font-size:12px;min-height:70px}.btn.quiet{width:100%;justify-content:center}}
 @media (max-width:360px){.rate-row{gap:5px}.rate span{font-size:11px;padding:10px 2px}}
@@ -336,6 +339,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
               <div class="fld"><label for="fb-msg" id="fb-msg-l">Comments</label>
                 <textarea id="fb-msg" name="comments" rows="4" maxlength="2000" required placeholder="What worked, what didn’t, what you wish it did."></textarea>
                 <span class="count" id="fb-count" aria-hidden="true">0 / 2000</span></div>
+              <p class="fb-note">Your feedback is posted as a public GitHub issue. Leave out anything private.</p>
               <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" id="fb-hp" tabindex="-1" autocomplete="off"></label></div>
               <p class="priv">Each message becomes a public GitHub issue. Don’t include org names, customer data or anything private.</p>
               <div id="ts-box"></div>
@@ -368,9 +372,12 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 </div>
 <footer>
   <div class="wrap">
-    <span>Telltale for Mac, a free beta provided as is. This page counts downloads by country without cookies. Sending feedback uses a Cloudflare check and keeps your IP address for up to an hour to stop abuse.</span>
-    <span>Telltale is an independent tool. It is not affiliated with or endorsed by Salesforce or any other company named here; product names belong to their owners.</span>
-    <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+    <span class="foot-note">Free beta, provided as is. Telltale is an independent tool. It is not affiliated with or endorsed by Salesforce or any other company named here; product names belong to their owners. Counts downloads by country, without cookies.</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+    </nav>
   </div>
 </footer>
 
