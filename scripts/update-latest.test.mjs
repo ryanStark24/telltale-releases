@@ -45,6 +45,25 @@ test('writes digests, pins URLs, escapes the tag', () => {
 test('a foreign-only release is skipped: exit 1, nothing changed', () => {
   const { r, html } = run([{ tag_name: 'v9', draft: false, assets: [{ name: 'x-Intel-x64.zip', browser_download_url: 'https://evil.example.org/x.zip' }] }]);
   assert.equal(r.status, 1);
-  assert.match(r.stderr, /No non-draft release with a Mac zip found; nothing changed\./);
+  assert.match(r.stderr, /No non-draft release with a Mac dmg or zip found; nothing changed\./);
   assert.equal(html, readFileSync(join(root, 'docs/index.html'), 'utf8'));
+});
+
+test('prefers the dmg per arch and keeps zips as fallback', () => {
+  const mk = (n, d) => ({ name: n, size: 5, browser_download_url: P + 'v/' + n, digest: d });
+  const { r, html } = run([{ tag_name: 'v2.0.0', draft: false, published_at: '2026-11-19T00:00:00Z', html_url: P, body: 'b', assets: [
+    mk('T-mac-AppleSilicon-arm64.zip', D1), mk('T-mac-AppleSilicon-arm64.dmg', D1), mk('T-mac-AppleSilicon-arm64.dmg.blockmap', D1), mk('T-mac-Intel-x64.zip', D2),
+  ] }]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(html, /id="dl-arm" href="[^"]*arm64\.dmg"/);
+  assert.match(html, /id="dl-intel" href="[^"]*Intel-x64\.zip"/); // no intel dmg: zip fallback
+  assert.deepEqual(baked(html).assets.map((a) => a.name).sort(), ['T-mac-AppleSilicon-arm64.dmg', 'T-mac-AppleSilicon-arm64.zip', 'T-mac-Intel-x64.zip']);
+});
+
+test('zip-only release still works', () => {
+  const { r, html } = run([{ tag_name: 'v1.7.0', draft: false, html_url: P, assets: [
+    { name: 'T-mac-AppleSilicon-arm64.zip', size: 5, browser_download_url: P + 'v/a.zip' }, { name: 'T-mac-Intel-x64.zip', size: 5, browser_download_url: P + 'v/i.zip' } ] }]);
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(html, /id="dl-arm" href="[^"]*a\.zip"/);
+  assert.match(html, /id="dl-intel" href="[^"]*i\.zip"/);
 });
