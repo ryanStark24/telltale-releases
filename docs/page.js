@@ -158,8 +158,10 @@ var TELLTALE_CONFIG={
     if(!arm&&!intel){$('dls').hidden=true;$('dl-all').hidden=false;return} // only when no download URL is known at all
     $('dls').hidden=false;$('dl-all').hidden=true;
     var want=state.arch==='intel'&&intel?'intel':(arm?'arm':'intel');
-    setBtn('dl-arm',arm,'arm64','M1 or later',want==='arm',state.sure&&want==='arm');
-    setBtn('dl-intel',intel,'x64','Intel Mac',want==='intel',state.sure&&want==='intel');
+    var unsure=state.tried&&!state.sure&&!!arm&&!!intel; // can't tell: two equal buttons and a hint, never a guess
+    setBtn('dl-arm',arm,'arm64','M1 or later',!unsure&&want==='arm',state.sure&&want==='arm');
+    setBtn('dl-intel',intel,'x64','Intel Mac',!unsure&&want==='intel',state.sure&&want==='intel');
+    var hint=$('dl-hint');if(hint)hint.hidden=!unsure;
     renderSums(arm,intel);
     var lat=$('dl-latest');
     if(lat&&rel.tag_name){
@@ -182,23 +184,29 @@ var TELLTALE_CONFIG={
   }
 
   /* ---------- Mac type ---------- */
-  function detect(){
+  function detectByGraphics(){ // Safari and others: the graphics chip name is the only hint
     try{
-      var u=navigator.userAgentData;
-      if(u&&u.getHighEntropyValues){
-        u.getHighEntropyValues(['architecture']).then(function(r){
-          if(r.architecture==='arm'){state.arch='arm';state.sure=true;render()}
-          else if(r.architecture==='x86'&&/mac/i.test(u.platform||'')){state.arch='intel';state.sure=true;render()}
-        }).catch(function(){});
-        return;
-      }
-    }catch(e){}
-    try{ // Safari and others: the graphics chip name is the only hint
       var c=document.createElement('canvas'),gl=c.getContext('webgl'),x=gl&&gl.getExtension('WEBGL_debug_renderer_info');
       var r=x?String(gl.getParameter(x.UNMASKED_RENDERER_WEBGL)):'';
-      if(/Apple M|Apple GPU/i.test(r)){state.arch='arm';render()}
+      if(/Apple M|Apple GPU/i.test(r)){state.arch='arm';state.sure=true;render()} // an Apple GPU only exists on Apple Silicon
       else if(/Intel/i.test(r)&&/Mac/.test(navigator.platform||'')){state.arch='intel';state.sure=true;render()}
     }catch(e){}
+    if(!state.sure){state.tried=true;render()} // both checks done and neither is sure
+  }
+  function detect(){
+    var u;
+    try{u=navigator.userAgentData}catch(e){}
+    if(u&&u.getHighEntropyValues){
+      try{
+        u.getHighEntropyValues(['architecture']).then(function(r){
+          if(r&&r.architecture==='arm'){state.arch='arm';state.sure=true;render()}
+          else if(r&&r.architecture==='x86'&&/mac/i.test(u.platform||'')){state.arch='intel';state.sure=true;render()}
+          else detectByGraphics();
+        },detectByGraphics);
+        return;
+      }catch(e){}
+    }
+    detectByGraphics();
   }
 
   /* ---------- data: one fetch per visit ---------- */
