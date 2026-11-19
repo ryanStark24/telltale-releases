@@ -244,10 +244,10 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
       <p class="lede">Telltale is a Mac app for Salesforce developers and QAs. It reads your org, your tickets, your code and your debug logs, then tells you what is going on and shows its proof.</p>
       <div class="cta" id="download">
         <!--baked:cta-->
-        <p class="latest" id="dl-latest"><span class="pill">Latest</span><b>v1.7.4 beta</b><span class="sep">·</span>November 13, 2026</p>
+        <p class="latest" id="dl-latest"><span class="pill">Latest</span><b>v1.8.0 beta</b><span class="sep">·</span>November 19, 2026</p>
         <div class="dls" id="dls">
-          <a class="btn" id="dl-arm" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip" data-dl="arm64" data-ver="1.7.4-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Apple Silicon</span><small>M1 or later · 128 MB</small></span></a>
-          <a class="btn sec" id="dl-intel" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip" data-dl="x64" data-ver="1.7.4-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Intel</span><small>Intel Mac · 135 MB</small></span></a>
+          <a class="btn" id="dl-arm" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip" data-dl="arm64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Apple Silicon</span><small>M1 or later · 130 MB</small></span></a>
+          <a class="btn sec" id="dl-intel" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.zip" data-dl="x64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Intel</span><small>Intel Mac · 137 MB</small></span></a>
         </div>
         <p class="alt" id="dl-all" hidden><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p>
         <!--/baked:cta-->
@@ -262,8 +262,8 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
           <div class="slides" id="slides">
             <figure class="slide on" id="slide-0" data-cap="Ask a question and get the cause, with the path it took."><picture><source media="(prefers-color-scheme: dark)" srcset="img/h1-dark.webp"><img src="img/h1-light.webp" width="1600" height="1025" alt="Ask a question and get the cause, with the path it took drawn out as a flowchart."></picture></figure>
             <figure class="slide" id="slide-1" data-cap="A ticket checked against what the org actually ran." aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="img/h2-dark.webp"><img src="img/h2-light.webp" width="1600" height="1025" alt="A test case checked against what the org actually ran, step by step." loading="lazy" decoding="async"></picture></figure>
-            <figure class="slide" id="slide-2" data-cap="Debug logs read in full and stitched together." aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="img/h3-dark.webp"><img src="img/h3-light.webp" width="1600" height="1025" alt="A big debug log read in full and stitched with the others that touched the same record." loading="lazy" decoding="async"></picture></figure>
-            <figure class="slide" id="slide-3" data-cap="A fix tried on a branch, ready to test in a sandbox." aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="img/h4-dark.webp"><img src="img/h4-light.webp" width="1600" height="1025" alt="A suggested fix applied to a new branch, with its changed files listed and a check you can run against a sandbox." loading="lazy" decoding="async"></picture></figure>
+            <figure class="slide" id="slide-2" data-cap="Debug logs read in full and stitched together." aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="img/h3-dark.webp"><img src="img/h3-light.webp" width="1600" height="1025" alt="The Timeline of 236 debug logs: the ones that touched one record stitched together, the rest folded away, and the failing log opened." loading="lazy" decoding="async"></picture></figure>
+            <figure class="slide" id="slide-3" data-cap="A fix on its own branch, with every changed file and line to review." aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="img/h4-dark.webp"><img src="img/h4-light.webp" width="1600" height="1025" alt="A suggested fix on its own branch: four changed files in a list, the lines it adds and removes, and the next step, testing it in the org the bug came from." loading="lazy" decoding="async"></picture></figure>
             </div>
         </figure>
         <ul class="tabs" id="tabs" role="group" aria-label="Choose a screen"><li><button class="tab" type="button" aria-pressed="true" aria-controls="slide-0" data-i="0">Ask<i></i></button></li><li><button class="tab" type="button" aria-pressed="false" aria-controls="slide-1" data-i="1">Tickets<i></i></button></li><li><button class="tab" type="button" aria-pressed="false" aria-controls="slide-2" data-i="2">Logs<i></i></button></li><li><button class="tab" type="button" aria-pressed="false" aria-controls="slide-3" data-i="3">Fix<i></i></button></li></ul>
@@ -275,15 +275,15 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
     <section aria-labelledby="what">
       <h2 id="what">One teammate for the whole investigation.</h2>
       <div class="feat">
-        <div class="copy"><h3>Ask your org in plain words</h3><p>Type a question the way you would ask a colleague. Use @ for a person or a field and # for a record, a ticket or a design doc. Telltale reads the org and answers with a short explanation or a table.</p><ul><li>Records show by name where the org has one, not by ID</li><li>Everyday questions get quick answers; heavy cases bring in the team</li><li>Every answer lists what it was based on</li></ul></div>
+        <div class="copy"><h3>Ask your org in plain words</h3><p>Type a question the way you would ask a colleague. Use @ for a person or a field and # for a record, a ticket or a design doc. Telltale reads the org and answers with a short explanation or a table.</p><ul><li>Everyday questions get quick answers; heavy cases bring in the team</li><li>Every answer lists what it was based on</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f1-dark.webp"><img src="img/f1-light.webp" width="1310" height="1025" alt="An answer as a table, showing which orders are ready to test." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
-        <div class="copy"><h3>See what failed, as it fails</h3><p>Name the user and the record you are tracing. Telltale turns logging on for them, reads each log as it arrives and explains what ran, where it broke and what to change.</p><ul><li>Big debug logs are read in full</li><li>Logs that share a record are stitched into one story</li><li>Run again to see whether it still fails</li></ul></div>
-        <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f2-dark.webp"><img src="img/f2-light.webp" width="1310" height="1025" alt="The Logs view: one failing order, its logs stitched together, and the line that broke." loading="lazy" decoding="async"></picture></figure>
+        <div class="copy"><h3>See what failed, as it fails</h3><p>Name the user and the record you are tracing. Telltale turns logging on for them, reads each log as it arrives and explains what ran, where it broke and what to change. Pick a log line and ask about it, and your reply carries a quote of those lines.</p><ul><li>Big debug logs are read in full</li><li>Logs that share a record are stitched into one story</li><li>Logs and write-ups name people and records, not IDs</li></ul></div>
+        <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f2-dark.webp"><img src="img/f2-light.webp" width="1310" height="1025" alt="The Timeline: one failing order, its logs stitched together, the line that broke, and your lead's reading of it." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat">
-        <div class="copy"><h3>From the ticket to the code</h3><p>Give it a story or bug number. Telltale reads the ticket live, including pictures pasted into it, then checks the steps against the org and reads the code that ran. Jira, Azure DevOps and ServiceNow are supported.</p><ul><li>Reads every file in your code folder and keeps a code map up to date</li><li>Compares one thing across two orgs, your code folder and a git branch</li><li>Answers cite the file and the line</li></ul></div>
+        <div class="copy"><h3>From the ticket to the code</h3><p>Give it a story or bug number. Telltale reads the ticket live, including pictures pasted into it, then checks the steps against the org and reads the code that ran. Jira, Azure DevOps and ServiceNow are supported.</p><ul><li>Reads the text files in your code folder and keeps its Salesforce Code Graph up to date</li><li>Compares one thing across two orgs, your code folder and a git branch</li><li>Answers cite the file and the line</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f3-dark.webp"><img src="img/f3-light.webp" width="1310" height="1025" alt="An answer quoting the deployed code, with its lines." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
@@ -291,11 +291,11 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f4-dark.webp"><img src="img/f4-light.webp" width="1376" height="944" alt="A how-to document written from a recorded run." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat">
-        <div class="copy"><h3>Slack, your wiki and your own tools</h3><p>Connect what your team already uses. Telltale searches Slack or Teams, reads Confluence pages and talks to your own tool servers, and it only reads. A reply is a draft you send yourself.</p><ul><li>Paste a Slack thread link and get a drafted reply to edit</li><li>Nothing is posted until you press Send</li><li>Connectors you already set up on your Mac are found for you to trust</li></ul></div>
-        <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f5-dark.webp"><img src="img/f5-light.webp" width="1020" height="690" alt="Settings, Connectors: what is connected and what each one is for." loading="lazy" decoding="async"></picture></figure>
+        <div class="copy"><h3>Slack, your wiki and your own tools</h3><p>Connect what your team already uses. Telltale searches your Slack or Teams messages, reads Confluence pages and talks to your own tool servers, and it only reads. A reply is a draft you send yourself.</p><ul><li>Paste a Slack thread link and get a drafted reply to edit</li><li>Nothing is posted until you press Send</li><li>Connectors you already set up on your Mac are found for you to trust</li></ul></div>
+        <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f5-dark.webp"><img src="img/f5-light.webp" width="1024" height="901" alt="Settings, Connectors: what is connected, your own tool servers, and what is ready to connect." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
-        <div class="copy"><h3>Answers you can check</h3><p>Your lead splits a question across specialists that each check one thing. A separate Answer checker looks every answer over and says plainly what it could not confirm.</p><ul><li>Reads ask first, and production is blocked unless you confirm</li><li>Fixes deploy to a sandbox only, and only when you click</li><li>Personal data is masked before anything goes to a model</li></ul></div>
+        <div class="copy"><h3>Answers you can check</h3><p>Your lead splits a question across specialists that each check one thing. A separate Answer checker looks every answer over and says plainly what it could not confirm.</p><ul><li>Reads ask first, and production is blocked unless you confirm</li><li>A fix is checked and deployed only to a non-production org, and only when you click</li><li>Personal data is masked before anything goes to a model</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f6-dark.webp"><img src="img/f6-light.webp" width="1310" height="1025" alt="An answer with the checker's note on the one point it could not confirm." loading="lazy" decoding="async"></picture></figure>
       </div>
     </section>
@@ -309,11 +309,11 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
     <section aria-labelledby="install">
       <h2 id="install" >Installing takes a minute.</h2>
       <ol class="steps">
-        <li><b>Download</b><span>Pick the zip for your Mac above.</span></li>
-        <li><b>Unzip</b><span>Double-click the zip in your Downloads folder.</span></li>
-        <li><b>Drag to Applications</b><span>Move Telltale into Applications, then open it.</span></li>
+        <li><b>Download</b><span>Pick the download for your Mac above.</span></li>
+        <li><b>Open it</b><span>Double-click the installer in your Downloads folder. A zip opens the same way.</span></li>
+        <li><b>Drag to Applications</b><span>Drag Telltale into Applications, then open it.</span></li>
       </ol>
-      <p class="calm">Telltale needs macOS 13 or later. The first time you open it, macOS may say it can't check the app for malicious software. Open System Settings › Privacy &amp; Security and choose Open Anyway.</p>
+      <p class="calm">Telltale needs macOS 13 or later. It is signed and checked by Apple, so it opens like any other app. The first time, macOS may ask you to confirm that you want to open an app downloaded from the internet. Choose Open.</p>
     </section>
 
     <section aria-labelledby="fb" id="feedback">
@@ -373,7 +373,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
   </div>
 </footer>
 
-<script type="application/json" id="baked-release">{"tag_name":"v1.7.4-beta.1","published_at":"2026-11-13T02:04:37Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.7.4-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip","size":134234939,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-AppleSilicon-arm64.zip"},{"name":"Telltale-1.7.4-beta.1-mac-Intel-x64.zip","size":141211794,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.7.4-beta.1/Telltale-1.7.4-beta.1-mac-Intel-x64.zip"}]}</script>
+<script type="application/json" id="baked-release">{"tag_name":"v1.8.0-beta.1","published_at":"2026-11-19T02:50:50Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.8.0-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","size":136720098,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","digest":"sha256:0c7f0fed68128ee60beeaa49ba4273bc02fbf5e78c7867da9a3eb98ee5455f37"},{"name":"Telltale-1.8.0-beta.1-mac-Intel-x64.zip","size":143697189,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.zip","digest":"sha256:89cc9284ebc8dd60bca2b3cd86b589c05141f3ee04fc15596cf617950efe8954"}]}</script>
 <script src="page.js" defer></script>
 </body>
 </html>
