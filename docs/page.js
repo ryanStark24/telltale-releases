@@ -128,7 +128,9 @@ var TELLTALE_CONFIG={
     if(m)return m[1]+' beta'+(m[2]&&m[2]!=='1'?' '+m[2]:'');
     return v;
   }
-  function find(rel,pat){var a=(rel.assets||[]);for(var i=0;i<a.length;i++)if(a[i].name&&a[i].name.indexOf(pat)>-1&&a[i].browser_download_url)return a[i];return null}
+  /* The arch's installer (.dmg) first; its .zip only when the release has no dmg (older releases). */
+  function findMac(rel,arch){return find(rel,arch+'.dmg',true)||find(rel,arch+'.zip',true)}
+  function find(rel,pat,end){var a=(rel.assets||[]);for(var i=0;i<a.length;i++)if(a[i].name&&(end?a[i].name.slice(-pat.length)===pat:a[i].name.indexOf(pat)>-1)&&a[i].browser_download_url)return a[i];return null}
 
   /* ---------- render download ---------- */
   function setBtn(id,asset,kind,desc,primary,sure){
@@ -138,7 +140,7 @@ var TELLTALE_CONFIG={
     b.classList.toggle('sec',!primary);
     b.querySelector('small').textContent=desc+(asset.size?' · '+mb(asset.size):'')+(sure?' · Looks like your Mac':'');
   }
-  /* SHA-256 of each zip, from GitHub's asset digest. Hidden when none is known. */
+  /* SHA-256 of each download, from GitHub's asset digest. Hidden when none is known. */
   function renderSums(arm,intel){
     var box=$('dl-sums');if(!box)return;
     box.textContent='';
@@ -151,13 +153,15 @@ var TELLTALE_CONFIG={
     box.hidden=!box.children.length;
   }
   function render(){
-    var rel=state.rel,arm=rel&&find(rel,'AppleSilicon-arm64.zip'),intel=rel&&find(rel,'Intel-x64.zip');
+    var rel=state.rel,arm=rel&&findMac(rel,'AppleSilicon-arm64'),intel=rel&&findMac(rel,'Intel-x64');
     if(!rel)return; // baked data missing or malformed: keep the baked buttons as they are
     if(!arm&&!intel){$('dls').hidden=true;$('dl-all').hidden=false;return} // only when no download URL is known at all
     $('dls').hidden=false;$('dl-all').hidden=true;
     var want=state.arch==='intel'&&intel?'intel':(arm?'arm':'intel');
-    setBtn('dl-arm',arm,'arm64','M1 or later',want==='arm',state.sure&&want==='arm');
-    setBtn('dl-intel',intel,'x64','Intel Mac',want==='intel',state.sure&&want==='intel');
+    var unsure=state.tried&&!state.sure&&!!arm&&!!intel; // can't tell: two equal buttons and a hint, never a guess
+    setBtn('dl-arm',arm,'arm64','M1 or later',!unsure&&want==='arm',state.sure&&want==='arm');
+    setBtn('dl-intel',intel,'x64','Intel Mac',!unsure&&want==='intel',state.sure&&want==='intel');
+    var hint=$('dl-hint');if(hint)hint.hidden=!unsure;
     renderSums(arm,intel);
     var lat=$('dl-latest');
     if(lat&&rel.tag_name){
@@ -180,35 +184,41 @@ var TELLTALE_CONFIG={
   }
 
   /* ---------- Mac type ---------- */
-  function detect(){
+  function detectByGraphics(){ // Safari and others: the graphics chip name is the only hint
     try{
-      var u=navigator.userAgentData;
-      if(u&&u.getHighEntropyValues){
-        u.getHighEntropyValues(['architecture']).then(function(r){
-          if(r.architecture==='arm'){state.arch='arm';state.sure=true;render()}
-          else if(r.architecture==='x86'&&/mac/i.test(u.platform||'')){state.arch='intel';state.sure=true;render()}
-        }).catch(function(){});
-        return;
-      }
-    }catch(e){}
-    try{ // Safari and others: the graphics chip name is the only hint
       var c=document.createElement('canvas'),gl=c.getContext('webgl'),x=gl&&gl.getExtension('WEBGL_debug_renderer_info');
       var r=x?String(gl.getParameter(x.UNMASKED_RENDERER_WEBGL)):'';
-      if(/Apple M|Apple GPU/i.test(r)){state.arch='arm';render()}
+      if(/Apple M|Apple GPU/i.test(r)){state.arch='arm';state.sure=true;render()} // an Apple GPU only exists on Apple Silicon
       else if(/Intel/i.test(r)&&/Mac/.test(navigator.platform||'')){state.arch='intel';state.sure=true;render()}
     }catch(e){}
+    if(!state.sure){state.tried=true;render()} // both checks done and neither is sure
+  }
+  function detect(){
+    var u;
+    try{u=navigator.userAgentData}catch(e){}
+    if(u&&u.getHighEntropyValues){
+      try{
+        u.getHighEntropyValues(['architecture']).then(function(r){
+          if(r&&r.architecture==='arm'){state.arch='arm';state.sure=true;render()}
+          else if(r&&r.architecture==='x86'&&/mac/i.test(u.platform||'')){state.arch='intel';state.sure=true;render()}
+          else detectByGraphics();
+        },detectByGraphics);
+        return;
+      }catch(e){}
+    }
+    detectByGraphics();
   }
 
   /* ---------- data: one fetch per visit ---------- */
-  function hasZips(r){return !!(r&&!r.draft&&(find(r,'AppleSilicon-arm64.zip')||find(r,'Intel-x64.zip')))}
+  function hasMacDownload(r){return !!(r&&!r.draft&&(findMac(r,'AppleSilicon-arm64')||findMac(r,'Intel-x64')))}
   function pick(list){
     if(!Array.isArray(list))return null;
-    for(var i=0;i<list.length;i++)if(list[i]&&!list[i].draft&&hasZips(list[i]))return list[i];
+    for(var i=0;i<list.length;i++)if(list[i]&&!list[i].draft&&hasMacDownload(list[i]))return list[i];
     return null;
   }
   function trim(x){return {tag_name:x.tag_name,name:x.name,draft:x.draft,prerelease:x.prerelease,published_at:x.published_at,html_url:x.html_url,body:x.body,assets:(x.assets||[]).map(function(a){return {name:a.name,size:a.size,browser_download_url:a.browser_download_url,digest:a.digest}})}}
-  /* A newer release replaces the known one; anything without zip assets is ignored, so the state never gets worse. */
-  function take(r){if(!hasZips(r))return false;state.rel=r;render();renderNews();fbLink();return true}
+  /* A newer release replaces the known one; anything without a Mac dmg or zip is ignored, so the state never gets worse. */
+  function take(r){if(!hasMacDownload(r))return false;state.rel=r;render();renderNews();fbLink();return true}
   function getJSON(url,ms,opts){
     var ctl=window.AbortController?new AbortController():null,t=setTimeout(function(){ctl&&ctl.abort()},ms);
     opts=opts||{};if(ctl)opts.signal=ctl.signal;

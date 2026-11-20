@@ -2,7 +2,7 @@
 // Writes docs/latest.json and rewrites the baked download links, version line and the baked-release JSON block in docs/index.html.
 // Usage: node update-latest.mjs <releases.json> [docs-dir]
 //   releases.json: output of `gh api "repos/ryanStark24/telltale-releases/releases?per_page=5"`
-// Picks the first non-draft release that has a Mac zip. Exits 1 (and changes nothing) if there is none.
+// Picks the first non-draft release that has a Mac dmg or zip. Each arch prefers its .dmg and falls back to its .zip. Exits 1 (and changes nothing) if there is none.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
@@ -15,10 +15,12 @@ const DIGEST = /^sha256:[0-9a-f]{64}$/;
 
 const raw = JSON.parse(readFileSync(releasesFile, 'utf8'));
 const list = (Array.isArray(raw) ? raw : [raw]).flat();
-const ARM = 'AppleSilicon-arm64.zip', INTEL = 'Intel-x64.zip';
-const find = (r, p) => (r.assets || []).find((a) => a.name && a.name.includes(p) && typeof a.browser_download_url === 'string' && a.browser_download_url.startsWith(PREFIX));
+const ARM = 'AppleSilicon-arm64', INTEL = 'Intel-x64';
+const EXTS = ['.dmg', '.zip']; // installer first, zip only when a release has no dmg for that arch
+const isMacAsset = (a) => a && a.name && EXTS.some((e) => a.name.endsWith(e)) && typeof a.browser_download_url === 'string' && a.browser_download_url.startsWith(PREFIX);
+const find = (r, arch) => { for (const e of EXTS) { const a = (r.assets || []).find((x) => isMacAsset(x) && x.name.endsWith(arch + e)); if (a) return a; } return undefined; };
 const rel = list.find((r) => r && !r.draft && (find(r, ARM) || find(r, INTEL)));
-if (!rel) { console.error('No non-draft release with a Mac zip found; nothing changed.'); process.exit(1); }
+if (!rel) { console.error('No non-draft release with a Mac dmg or zip found; nothing changed.'); process.exit(1); }
 
 const trim = (x) => ({
   tag_name: x.tag_name, name: x.name, draft: x.draft, prerelease: x.prerelease, published_at: x.published_at, html_url: x.html_url, body: x.body,
@@ -51,7 +53,7 @@ const block = `<!--baked:cta-->
         </div>
         <p class="alt" id="dl-all" hidden><a href="${REL}">All releases on GitHub</a></p>
         <!--/baked:cta-->`;
-const json = JSON.stringify({ tag_name: latest.tag_name, published_at: latest.published_at, html_url: latest.html_url, prerelease: latest.prerelease, assets: latest.assets.filter((a) => a.name.endsWith('.zip')) }).replace(/</g, '\\u003c');
+const json = JSON.stringify({ tag_name: latest.tag_name, published_at: latest.published_at, html_url: latest.html_url, prerelease: latest.prerelease, assets: latest.assets.filter((a) => EXTS.some((e) => a.name.endsWith(e))) }).replace(/</g, '\\u003c');
 
 const file = join(docs, 'index.html');
 let html = readFileSync(file, 'utf8');

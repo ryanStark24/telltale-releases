@@ -249,14 +249,14 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         <!--baked:cta-->
         <p class="latest" id="dl-latest"><span class="pill">Latest</span><b>v1.8.0 beta</b><span class="sep">·</span>November 19, 2026</p>
         <div class="dls" id="dls">
-          <a class="btn" id="dl-arm" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip" data-dl="arm64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Apple Silicon</span><small>M1 or later · 130 MB</small></span></a>
-          <a class="btn sec" id="dl-intel" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.zip" data-dl="x64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Intel</span><small>Intel Mac · 137 MB</small></span></a>
+          <a class="btn" id="dl-arm" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.dmg" data-dl="arm64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Apple Silicon</span><small>M1 or later · 148 MB</small></span></a>
+          <a class="btn sec" id="dl-intel" href="https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.dmg" data-dl="x64" data-ver="1.8.0-beta"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M4 16.5h12"/></svg><span class="bt"><span class="bl">Intel</span><small>Intel Mac · 154 MB</small></span></a>
         </div>
         <p class="alt" id="dl-all" hidden><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p>
         <!--/baked:cta-->
         <div class="sums" id="dl-sums" hidden></div>
-        <p class="hint" id="dl-hint">Not sure which Mac you have? Open the Apple menu › About This Mac. If it says Apple M1 or later, pick Apple Silicon. If it says Intel, pick Intel.</p>
-        <noscript><p class="alt"><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p></noscript>
+        <p class="hint" id="dl-hint" hidden>Not sure which? Apple menu › About This Mac: Chip "Apple M…" means Apple Silicon, Processor "Intel" means Intel.</p>
+        <noscript><p class="hint">Not sure which? Apple menu › About This Mac: Chip "Apple M…" means Apple Silicon, Processor "Intel" means Intel.</p><p class="alt"><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p></noscript>
       </div>
 
       <div class="stage" id="stage">
@@ -313,8 +313,8 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
       <h2 id="install" >Installing takes a minute.</h2>
       <ol class="steps">
         <li><b>Download</b><span>Pick the download for your Mac above.</span></li>
-        <li><b>Open it</b><span>Double-click the download in your Downloads folder.</span></li>
-        <li><b>Drag to Applications</b><span>Drag Telltale into Applications, then open it.</span></li>
+        <li><b>Open it</b><span>Open the download in your Downloads folder. A window opens with Telltale in it.</span></li>
+        <li><b>Drag to Applications</b><span>Drag Telltale into Applications, then open it from Applications.</span></li>
       </ol>
       <p class="calm">Telltale needs macOS 13 or later. It is signed with a Developer ID and notarized by Apple, so it opens like any other app. The first time, macOS may ask you to confirm that you want to open an app downloaded from the internet. Choose Open.</p>
     </section>
@@ -381,7 +381,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
   </div>
 </footer>
 
-<script type="application/json" id="baked-release">{"tag_name":"v1.8.0-beta.1","published_at":"2026-11-19T02:50:50Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.8.0-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","size":136720098,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","digest":"sha256:0c7f0fed68128ee60beeaa49ba4273bc02fbf5e78c7867da9a3eb98ee5455f37"},{"name":"Telltale-1.8.0-beta.1-mac-Intel-x64.zip","size":143697189,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.zip","digest":"sha256:89cc9284ebc8dd60bca2b3cd86b589c05141f3ee04fc15596cf617950efe8954"}]}</script>
+<script type="application/json" id="baked-release">{"tag_name":"v1.8.0-beta.1","published_at":"2026-11-19T02:50:50Z","html_url":"https://github.com/ryanStark24/telltale-releases/releases/tag/v1.8.0-beta.1","prerelease":false,"assets":[{"name":"Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.dmg","size":155185892,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.dmg","digest":"sha256:449cbd4116767c56927f53159b78bef64ab2864e7c1d45e998ff5220989f9b23"},{"name":"Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","size":136720098,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-AppleSilicon-arm64.zip","digest":"sha256:0c7f0fed68128ee60beeaa49ba4273bc02fbf5e78c7867da9a3eb98ee5455f37"},{"name":"Telltale-1.8.0-beta.1-mac-Intel-x64.dmg","size":161545396,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.dmg","digest":"sha256:55a1e93de948a1b3b4bfc88c972f71c1adb56c27ac2c9b9be843c2cabad56699"},{"name":"Telltale-1.8.0-beta.1-mac-Intel-x64.zip","size":143697189,"browser_download_url":"https://github.com/ryanStark24/telltale-releases/releases/download/v1.8.0-beta.1/Telltale-1.8.0-beta.1-mac-Intel-x64.zip","digest":"sha256:89cc9284ebc8dd60bca2b3cd86b589c05141f3ee04fc15596cf617950efe8954"}]}</script>
 <script src="page.js" defer></script>
 </body>
 </html>
