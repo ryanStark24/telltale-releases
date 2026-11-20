@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What it can do · Telltale Guide</title>
+<meta name="description" content="Ten things Telltale does, and what you need for each. Written for Beta 1.8.1.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../guide.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../../" aria-label="Telltale, home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7FB4FF"/><stop offset=".5" stop-color="#8A86FF"/><stop offset="1" stop-color="#C79BFF"/></linearGradient><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34363F"/><stop offset="1" stop-color="#16171B"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#bg2)"/><path d="M10 38h10l6-16 8 24 6-12h14" fill="none" stroke="url(#bg1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Telltale
+    </a>
+    <nav class="toplinks" aria-label="Site"><a class="toplink" href="../../#download">Download</a><a class="toplink" href="../" aria-current="page">Guide</a><a class="toplink hide-s" href="https://github.com/ryanStark24/telltale-releases/releases">All releases</a></nav>
+  </header>
+
+  <div class="layout">
+    <aside class="side" aria-label="Guide pages">
+      <h2>Guide</h2>
+      <ol><li><a href="../"><span>1</span>Get started</a></li><li><a href="../around/"><span>2</span>Find your way around</a></li><li><a href="../features/" aria-current="page"><span>3</span>What it can do</a></li><li><a href="../your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="../help/"><span>5</span>Help</a></li></ol>
+    </aside>
+
+    <article>
+      <details class="mnav">
+        <summary><span>Guide <small>· 3 of 5 · What it can do</small></span></summary>
+        <ol><li><a href="../"><span>1</span>Get started</a></li><li><a href="../around/"><span>2</span>Find your way around</a></li><li><a href="../features/" aria-current="page"><span>3</span>What it can do</a></li><li><a href="../your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="../help/"><span>5</span>Help</a></li></ol>
+      </details>
+
+      <p class="stamp">Written for Beta 1.8.1</p>
+      <h1>What it can do</h1>
+      <p class="lede">Ten jobs, each in a few lines. Each one says what you need before you start.</p>
+
+      <section class="job" id="job1">
+        <h2><span>1</span>Debug a failure live</h2>
+        <p>Choose <b>Debug live</b>, or leave <b>Pick for me</b> on. Telltale turns on logs for the person you name and reads each log as it arrives. You reproduce the problem in your browser, and your lead explains each failure as it lands. Choose <b>End logging</b> when you are done.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-live-dark.webp"><img src="../img/g-live-light.webp" width="1600" height="874" alt="A chat while logging is on: the answer, and a line above the reply box showing three logs, one failed." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a signed-in org, and a Salesforce user who can turn on debug logs. Production asks first.</p>
+      </section>
+      <section class="job" id="job2">
+        <h2><span>2</span>Collect logs for a longer run</h2>
+        <p>Choose <b>Collect logs</b> when the problem takes a while to show up. Telltale asks how long logging should stay on: 1 hour, 4 hours or until tomorrow morning. Salesforce switches it off by itself, and a day is the most it allows. When you stop, you get one write-up.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-collect-dark.webp"><img src="../img/g-collect-light.webp" width="1600" height="1251" alt="The logs list beside a chat: the failed logs first, then the ones that ran clean." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a signed-in org and a user who can turn on debug logs.</p>
+      </section>
+      <section class="job" id="job3">
+        <h2><span>3</span>Read a log you already have</h2>
+        <p>Drop a <code>.log</code> file into a chat and your lead reads it. Open any log, then use <b>Show</b> to pick Problems, Everything, Queries, Data changes, Callouts or Debug lines. Use <b>Search log</b> to find a word. Click a line, or drag over several, and press <kbd>Return</kbd> or <b>Ask</b> to quote it into the reply box.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-readlog-dark.webp"><img src="../img/g-readlog-light.webp" width="1040" height="1200" alt="A log open beside the chat, with the Show menu listing Problems, Everything, Queries, Data changes, Callouts and Debug lines." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a <code>.log</code> file. A log file on its own cannot turn logging on.</p>
+      </section>
+      <section class="job" id="job4">
+        <h2><span>4</span>Ask your org anything</h2>
+        <p>Ask about records, who can see or edit something, flows and Apex that touch a field, or what changed recently. Your lead reads the org, your code, your tickets and your docs, and answers with the evidence under it. The <b>Reads</b> pill shows whether it <b>Asks first</b> or is set to <b>Auto</b>.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-ask-dark.webp"><img src="../img/g-ask-light.webp" width="1600" height="925" alt="An answer with its reads listed under it: what your lead looked at in the org." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a signed-in org. In production, and in any org Telltale cannot confirm, every read asks first.</p>
+      </section>
+      <section class="job" id="job5">
+        <h2><span>5</span>Bring in tickets and docs</h2>
+        <p>Connect Jira, Azure DevOps, ServiceNow, Confluence, GitHub or Bitbucket. Then paste a story link or a ticket number, and your lead reads it. Type <b>@</b> for a person, a field or a class, and <b>#</b> for a record or a ticket. Open <b>Lookup</b> to browse. Chat tools such as Slack come in as custom connectors.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-lookup-dark.webp"><img src="../img/g-lookup-light.webp" width="1480" height="960" alt="The Lookup window on its Stories tab, listing a story, a test case and a bug." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> the connector signed in under Settings, then <b>Connectors</b>. Each one asks only for what it needs.</p>
+      </section>
+      <section class="job" id="job6">
+        <h2><span>6</span>Fix it</h2>
+        <p>Choose <b>Suggest a fix</b> under an answer. You get the changed lines, the risk and a test that should fail now. <b>Apply to my code</b> writes the files on a new branch in your folder, and nothing is pushed. <b>Check in</b> a sandbox compiles it and runs the tests, and changes nothing in the org. <b>Deploy</b> and <b>Put back</b> work only on your click, and only in a sandbox, a Developer Edition or a scratch org. <b>Carry to branches</b> tries the fix on your other branches.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-fix-dark.webp"><img src="../img/g-fix-light.webp" width="1600" height="1002" alt="A fix card with the changed files, its risk, and the Apply to my code choices." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a project with its repo. Check and Deploy also need a non-production org.</p>
+      </section>
+      <section class="job" id="job7">
+        <h2><span>7</span>Reproduce it safely, and one-call actions</h2>
+        <p>Sometimes a failure leaves no log. Your lead can propose a <b>Reproduce</b> card with the exact code it would run. You read it, then choose <b>Run</b>. Everything it changes is rolled back. Callouts and anything published immediately still go out.</p>
+        <p>A <b>one-call action</b> is different. It runs one named call in your org, or a short piece of Apex, and it <b>changes data and can't be undone</b>. The ask says so, shows the exact code and waits for your click.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-repro-dark.webp"><img src="../img/g-repro-light.webp" width="1600" height="730" alt="A Reproduce card: the code, the note that changes are rolled back, and Run, Change it and Not now." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> a non-production org. Neither one ever runs in production.</p>
+      </section>
+      <section class="job" id="job8">
+        <h2><span>8</span>Record a process</h2>
+        <p>Choose <b>Record a process</b>, then click through the steps in Salesforce the way you normally would. Telltale records only your org's Salesforce browser window and paints over private values. When you are done, you get a step-by-step doc with masked screenshots. You can cut a part, add marks, and save it as a how-to or a bug report.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-flowdoc-dark.webp"><img src="../img/g-flowdoc-light.webp" width="1600" height="891" alt="A step-by-step doc made from a recording: who it was tested as, what to have ready, and the steps." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> Screen Recording allowed for Telltale, a browser it can see (Chrome, Edge, Brave, Arc or Safari), and Telltale running from Applications.</p>
+      </section>
+      <section class="job" id="job9">
+        <h2><span>9</span>Share it</h2>
+        <p>Once a chat has an answer, <b>Share</b> lets you export the chat as PDF, Word or Markdown. <b>Formal bug report</b> writes a summary, the issue, the root cause, steps to reproduce and the fix, ready for a ticket. You can copy it or save it. Secrets Telltale recognises are taken out, and names in the timeline are hidden.</p>
+        <p>To reply in a chat tool, ask your lead to <b>Draft a reply</b>. You get a draft card, and nothing is sent until you choose <b>Send</b>. Auto-send is off unless you allow it, and it always waits five seconds with a <b>Cancel</b> first.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-report-dark.webp"><img src="../img/g-report-light.webp" width="1600" height="1410" alt="The Formal bug report window: Summary, Issue, Root cause and Steps to reproduce, with Copy and Save as PDF." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> an answer in the chat. Replies also need a chat tool connected as a custom connector.</p>
+      </section>
+      <section class="job" id="job10">
+        <h2><span>10</span>Make it yours</h2>
+        <p>Rename your lead in Settings, then <b>General</b>, under <b>Lead's name</b>. In <b>Chat</b>, pick how it talks: brief or detailed, direct or step by step. <b>Memory</b> keeps short notes about you and your projects while you work, and you can edit or forget any of them. <b>Skills</b> teach it your way of doing things. Use the mic beside Send to talk instead of typing.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-yours-dark.webp"><img src="../img/g-yours-light.webp" width="1600" height="1706" alt="Settings, General, with Lead's name set to Lead." loading="lazy" decoding="async"></picture></figure>
+        <p class="you"><b>You need:</b> nothing extra. The mic asks for Microphone permission the first time.</p>
+      </section>
+
+      <nav class="next" aria-label="Guide pages">
+        <a href="../around/"><small>Back, page 2</small><b>← Find your way around</b></a>
+        <a href="../your-org/"><small>Next, page 4</small><b>What Telltale does in your org →</b></a>
+      </nav>
+    </article>
+  </div>
+</div>
+<footer>
+  <div class="wrap">
+    <span>Telltale for Mac. Guide for Beta 1.8.1.</span>
+    <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+  </div>
+</footer>
+</body>
+</html>
