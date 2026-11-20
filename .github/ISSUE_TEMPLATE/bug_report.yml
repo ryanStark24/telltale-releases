@@ -35,7 +35,7 @@ body:
     attributes:
       label: Telltale version
       description: Shown in Settings › About.
-      placeholder: "1.7.4 beta"
+      placeholder: "Shown in Settings › About"
     validations:
       required: true
   - type: input

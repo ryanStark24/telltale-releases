@@ -148,6 +148,8 @@ h2{margin:0 0 clamp(24px,4vw,44px);font-size:clamp(28px,4.6vw,48px);line-height:
 footer{margin-top:clamp(72px,10vw,130px);border-top:1px solid var(--line);padding:30px 0 48px;font-size:15px;color:var(--fg-muted)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
 footer a{color:var(--fg-2);text-underline-offset:4px}
+.foot-note{max-width:44em}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 24px}
 
 .fb{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 40px;align-items:start}
 .fb h2{margin-bottom:14px}
@@ -186,6 +188,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 #fb-send{background:var(--accent);color:var(--on-accent);border-color:transparent}
 #fb-send[disabled]{opacity:.6;cursor:progress}
 .gh{margin:14px 0 0}#ts-box{margin:0 0 14px}
+.fb-note{margin:0;font-size:14px;color:var(--fg-muted);max-width:34em}
 @media (max-width:560px){.f2{grid-template-columns:1fr}.rate-row.k4{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){.fb{grid-template-columns:1fr}.rate span{font-size:12px;min-height:70px}.btn.quiet{width:100%;justify-content:center}}
 @media (max-width:360px){.rate-row{gap:5px}.rate span{font-size:11px;padding:10px 2px}}
@@ -275,11 +278,11 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
     <section aria-labelledby="what">
       <h2 id="what">One teammate for the whole investigation.</h2>
       <div class="feat">
-        <div class="copy"><h3>Ask your org in plain words</h3><p>Type a question the way you would ask a colleague. Use @ for a person or a field and # for a record, a ticket or a design doc. Telltale reads the org and answers with a short explanation or a table.</p><ul><li>Everyday questions get quick answers; heavy cases bring in the team</li><li>Every answer lists what it was based on</li></ul></div>
+        <div class="copy"><h3>Ask your org in plain words</h3><p>Type a question the way you would ask a colleague. Use @ for a person or a field and # for a record, a ticket or a design doc. Telltale reads the org and answers with a short explanation or a table.</p><ul><li>Everyday questions get quick answers; heavy cases bring in the team</li><li>Answers list what they were based on</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f1-dark.webp"><img src="img/f1-light.webp" width="1310" height="1025" alt="An answer as a table, showing which orders are ready to test." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
-        <div class="copy"><h3>See what failed, as it fails</h3><p>Name the user and the record you are tracing. Telltale turns logging on for them, reads each log as it arrives and explains what ran, where it broke and what to change. Pick a log line and ask about it, and your reply carries a quote of those lines.</p><ul><li>Big debug logs are read in full</li><li>Logs that share a record are stitched into one story</li><li>Logs and write-ups name people and records, not IDs</li></ul></div>
+        <div class="copy"><h3>See what failed, as it fails</h3><p>Name the user and the record you are tracing. Telltale turns logging on for them, reads each log as it arrives and explains what ran, where it broke and what to change. Pick a log line and ask about it, and your reply carries a quote of those lines.</p><ul><li>Big debug logs are read whole, up to the size Salesforce keeps</li><li>Logs that share a record are stitched into one story</li><li>Logs and write-ups name people and records, not IDs</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f2-dark.webp"><img src="img/f2-light.webp" width="1310" height="1025" alt="The Timeline: one failing order, its logs stitched together, the line that broke, and your lead's reading of it." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat">
@@ -287,15 +290,15 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f3-dark.webp"><img src="img/f3-light.webp" width="1310" height="1025" alt="An answer quoting the deployed code, with its lines." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
-        <div class="copy"><h3>Write-ups, flowcharts and exports</h3><p>Answers come with diagrams where a picture helps. Record a run and Telltale writes it up as a how-to or a bug report for you to edit and share. Ask in the chat and it can draft a document too.</p><ul><li>Flowcharts and sequences you can open step by step</li><li>Export a chat as PDF, Word or Markdown</li><li>Secrets and tokens are taken out first</li></ul></div>
+        <div class="copy"><h3>Write-ups, flowcharts and exports</h3><p>Answers come with diagrams where a picture helps. Record a run and Telltale writes it up as a how-to or a bug report for you to edit and share. Ask in the chat and it can draft a document too.</p><ul><li>Flowcharts and sequences you can open step by step</li><li>Export a chat as PDF, Word or Markdown</li><li>Secrets and tokens Telltale recognises are taken out first</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f4-dark.webp"><img src="img/f4-light.webp" width="1376" height="944" alt="A how-to document written from a recorded run." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat">
-        <div class="copy"><h3>Slack, your wiki and your own tools</h3><p>Connect what your team already uses. Telltale searches your Slack or Teams messages, reads Confluence pages and talks to your own tool servers, and it only reads. A reply is a draft you send yourself.</p><ul><li>Paste a Slack thread link and get a drafted reply to edit</li><li>Nothing is posted until you press Send</li><li>Connectors you already set up on your Mac are found for you to trust</li></ul></div>
+        <div class="copy"><h3>Slack, your wiki and your own tools</h3><p>Connect what your team already uses. Telltale searches your Slack or Teams messages, reads Confluence pages and talks to your own tool servers. It reads, and never posts by itself unless you allow it. A reply is a draft you send, or one that sends after a 5-second Cancel where you turned that on.</p><ul><li>Paste a Slack thread link and get a drafted reply to edit</li><li>A reply leaves when you press Send, or after a 5-second Cancel where you allowed automatic sending</li><li>Connectors you already set up on your Mac are found for you to trust</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f5-dark.webp"><img src="img/f5-light.webp" width="1024" height="901" alt="Settings, Connectors: what is connected, your own tool servers, and what is ready to connect." loading="lazy" decoding="async"></picture></figure>
       </div>
       <div class="feat flip">
-        <div class="copy"><h3>Answers you can check</h3><p>Your lead splits a question across specialists that each check one thing. A separate Answer checker looks every answer over and says plainly what it could not confirm.</p><ul><li>Reads ask first, and production is blocked unless you confirm</li><li>A fix is checked and deployed only to a non-production org, and only when you click</li><li>Personal data is masked before anything goes to a model</li></ul></div>
+        <div class="copy"><h3>Answers you can check</h3><p>Your lead splits a question across specialists that each check one thing. A separate Answer checker reviews findings and says plainly what it could not confirm.</p><ul><li>Production reads always ask first. Sandboxes read freely unless you say otherwise, and logging in production needs your confirmation</li><li>A fix is checked and deployed only to a non-production org, and only when you click. A one-call action that changes data also runs only on your click, in a non-production org, and can’t be undone</li><li>Emails, phone numbers, names in the fields you list and secrets are masked before text goes to a model. It can miss a value, and pictures go as they are</li></ul></div>
         <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/f6-dark.webp"><img src="img/f6-light.webp" width="1310" height="1025" alt="An answer with the checker's note on the one point it could not confirm." loading="lazy" decoding="async"></picture></figure>
       </div>
     </section>
@@ -313,7 +316,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         <li><b>Open it</b><span>Open the download in your Downloads folder. A window opens with Telltale in it.</span></li>
         <li><b>Drag to Applications</b><span>Drag Telltale into Applications, then open it from Applications.</span></li>
       </ol>
-      <p class="calm">Telltale needs macOS 13 or later. It is signed and checked by Apple, so it opens like any other app. The first time, macOS may ask you to confirm that you want to open an app downloaded from the internet. Choose Open.</p>
+      <p class="calm">Telltale needs macOS 13 or later. It is signed with a Developer ID and notarized by Apple, so it opens like any other app. The first time, macOS may ask you to confirm that you want to open an app downloaded from the internet. Choose Open.</p>
     </section>
 
     <section aria-labelledby="fb" id="feedback">
@@ -331,12 +334,14 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
               <div class="f2">
                 <div class="fld"><label for="fb-use" id="fb-use-l">What do you use Telltale for?</label>
                   <select id="fb-use" name="use" required><option value="">Choose one</option><option>Debugging failures</option><option>QA testing</option><option>Reviewing logs</option><option>Other</option></select></div>
-                <div class="fld"><label for="fb-ver">Telltale version</label><input id="fb-ver" name="version" type="text" inputmode="text" autocomplete="off" placeholder="1.7.4-beta.1" maxlength="20"></div>
+                <div class="fld"><label for="fb-ver">Telltale version</label><input id="fb-ver" name="version" type="text" inputmode="text" autocomplete="off" placeholder="Shown in Settings › About" maxlength="20"></div>
               </div>
               <div class="fld"><label for="fb-msg" id="fb-msg-l">Comments</label>
                 <textarea id="fb-msg" name="comments" rows="4" maxlength="2000" required placeholder="What worked, what didn’t, what you wish it did."></textarea>
                 <span class="count" id="fb-count" aria-hidden="true">0 / 2000</span></div>
+              <p class="fb-note">Your feedback is posted as a public GitHub issue. Leave out anything private.</p>
               <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" id="fb-hp" tabindex="-1" autocomplete="off"></label></div>
+              <p class="priv">Each message becomes a public GitHub issue. Don’t include org names, customer data or anything private.</p>
               <div id="ts-box"></div>
               <button class="btn quiet" id="fb-send" type="submit">Send feedback</button>
             </div>
@@ -344,7 +349,6 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
           </form>
           <div id="fb-thanks" class="thanks" hidden tabindex="-1"><b>Thank you.</b><span id="fb-thanks-text">Your feedback was sent.</span> <a id="fb-issue" href="#" hidden>See it on GitHub</a></div>
           <p class="gh" id="fb-gh"><a class="btn quiet" id="fb-link" href="https://github.com/ryanStark24/telltale-releases/issues/new?template=feedback.yml">Open an issue on GitHub</a></p>
-          <p class="priv">Each message becomes a public GitHub issue. Don’t include org names, customer data or anything private.</p>
         </div>
       </div>
     </section>
@@ -352,11 +356,11 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
     <section aria-labelledby="st" id="stats" hidden>
       <div class="st">
         <div>
-          <h2 id="st">Downloaded around the world.</h2>
+          <h2 id="st">Where it’s been downloaded.</h2>
           <p class="st-big" id="st-big" aria-hidden="true">0</p>
           <p class="st-sub" id="st-sub"></p>
           <ul class="st-ver" id="st-ver" hidden></ul>
-          <p class="st-note">Total downloads are exact, counted by GitHub. Countries show downloads started from this page in the last 90 days. Only the country is kept, never anything about who downloaded.</p>
+          <p class="st-note">Downloads counted by GitHub (zip files, updates included). Countries show downloads started from this page in the last 90 days. Only the country is kept, never anything about who downloaded.</p>
         </div>
         <div class="panel" id="st-panel" hidden>
           <p class="st-cap">Where the downloads came from</p>
@@ -368,8 +372,12 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
 </div>
 <footer>
   <div class="wrap">
-    <span>Telltale for Mac. This page counts visits and downloads without cookies or personal data.</span>
-    <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+    <span class="foot-note">Free beta, provided as is. Telltale is an independent tool. It is not affiliated with or endorsed by Salesforce or any other company named here; product names belong to their owners. Counts downloads by country, with no cookie. To count a click once, a one-way hash of your address is kept for an hour, then dropped.</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+    </nav>
   </div>
 </footer>
 
