@@ -57,6 +57,7 @@ a{color:inherit}
 header.top{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:18px;letter-spacing:-.01em;text-decoration:none}
 .brand svg{width:30px;height:30px;display:block}
+.toplinks{display:flex;gap:22px;align-items:center}
 .toplink{font-size:15px;color:var(--fg-2);text-decoration:none;padding:8px 2px;border-bottom:1px solid var(--line)}
 .toplink:hover{color:var(--fg);border-color:var(--fg)}
 
@@ -238,7 +239,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
       <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7FB4FF"/><stop offset=".5" stop-color="#8A86FF"/><stop offset="1" stop-color="#C79BFF"/></linearGradient><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34363F"/><stop offset="1" stop-color="#16171B"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#bg2)"/><path d="M10 38h10l6-16 8 24 6-12h14" fill="none" stroke="url(#bg1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Telltale
     </a>
-    <a class="toplink" href="https://github.com/ryanStark24/telltale-releases/releases">All releases</a>
+    <nav class="toplinks" aria-label="Site"><a class="toplink" href="guide/">Guide</a><a class="toplink" href="https://github.com/ryanStark24/telltale-releases/releases">All releases</a></nav>
   </header>
 
   <main id="top">
@@ -254,6 +255,7 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
         </div>
         <p class="alt" id="dl-all" hidden><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p>
         <!--/baked:cta-->
+        <p class="hint">New here? <a href="guide/">Setup takes five minutes</a>.</p>
         <div class="sums" id="dl-sums" hidden></div>
         <p class="hint" id="dl-hint" hidden>Not sure which? Apple menu › About This Mac: Chip "Apple M…" means Apple Silicon, Processor "Intel" means Intel.</p>
         <noscript><p class="hint">Not sure which? Apple menu › About This Mac: Chip "Apple M…" means Apple Silicon, Processor "Intel" means Intel.</p><p class="alt"><a href="https://github.com/ryanStark24/telltale-releases/releases">All releases on GitHub</a></p></noscript>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get started · Telltale Guide</title>
+<meta name="description" content="Install Telltale, set it up and ask your first question. Written for Beta 1.8.1.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="guide.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../" aria-label="Telltale, home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7FB4FF"/><stop offset=".5" stop-color="#8A86FF"/><stop offset="1" stop-color="#C79BFF"/></linearGradient><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34363F"/><stop offset="1" stop-color="#16171B"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#bg2)"/><path d="M10 38h10l6-16 8 24 6-12h14" fill="none" stroke="url(#bg1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Telltale
+    </a>
+    <nav class="toplinks" aria-label="Site"><a class="toplink" href="../#download">Download</a><a class="toplink" href="./" aria-current="page">Guide</a><a class="toplink hide-s" href="https://github.com/ryanStark24/telltale-releases/releases">All releases</a></nav>
+  </header>
+
+  <div class="layout">
+    <aside class="side" aria-label="Guide pages">
+      <h2>Guide</h2>
+      <ol><li><a href="./" aria-current="page"><span>1</span>Get started</a></li><li><a href="around/"><span>2</span>Find your way around</a></li><li><a href="features/"><span>3</span>What it can do</a></li><li><a href="your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="help/"><span>5</span>Help</a></li></ol>
+    </aside>
+
+    <article>
+      <details class="mnav">
+        <summary><span>Guide <small>· 1 of 5 · Get started</small></span></summary>
+        <ol><li><a href="./" aria-current="page"><span>1</span>Get started</a></li><li><a href="around/"><span>2</span>Find your way around</a></li><li><a href="features/"><span>3</span>What it can do</a></li><li><a href="your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="help/"><span>5</span>Help</a></li></ol>
+      </details>
+
+      <p class="stamp">Written for Beta 1.8.1</p>
+      <h1>Get started</h1>
+      <p class="lede">From download to your first answer, in about five minutes. Setup keeps going in the background while you answer a couple of questions.</p>
+
+      <div class="need">
+        <b>Before you start</b>
+        <ul class="need-list">
+          <li>A Mac running macOS 13 or later.</li>
+          <li>An AI model. This is the one thing you must have: a key of your own, or your company's AI gateway.</li>
+          <li>A Salesforce user with API access, plus View All Data or Manage Users so Telltale can turn on debug logs.</li>
+        </ul>
+        <p class="need-note">On a work Mac, IT may need to allow Telltale first.</p>
+      </div>
+
+      <h2 class="sec" id="steps">Six steps</h2>
+      <ol class="steps">
+        <li id="install">
+          <h3>Install</h3>
+          <p>Download the file that matches your Mac. Not sure which one you have? Open the Apple menu, choose <b>About This Mac</b>, and look at the line for Chip. "Apple M…" means Apple Silicon. "Intel" means Intel.</p>
+          <p>Open the download and drag <b>Telltale</b> onto <b>Applications</b>. Open it from there, because updates install only from Applications. If macOS asks whether you want to open an app from the internet, choose <b>Open</b>.</p>
+        </li>
+        <li id="first-launch">
+          <h3>First launch</h3>
+          <p>Two short screens. First your lead asks what to call you. Type your name and choose <b>Continue</b>.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-welcome-dark.webp"><img src="img/g-welcome-light.webp" width="1600" height="640" alt="The first screen: Hi, I'm your lead. What should I call you?" loading="lazy" decoding="async"></picture></figure>
+          <p class="cap">Your lead is the one who answers your questions.</p>
+          <p>Then pick where your lead should think. If Telltale found a model on your Mac, choose <b>Use it</b>. Otherwise paste a key or a gateway address into <b>Paste a key or address</b> and choose <b>Connect</b>. No key yet? Open <b>Don't have one? Get it here</b>. You can also choose <b>Skip for now</b> and add one later in Settings.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-model-dark.webp"><img src="img/g-model-light.webp" width="1600" height="1025" alt="The AI model screen: a key found on this Mac, a box to paste one, and ways to get one." loading="lazy" decoding="async"></picture></figure>
+        </li>
+        <li id="in-your-org">
+          <h3>What Telltale does in your org</h3>
+          <p>You stay in control. In four lines:</p>
+          <ul class="four">
+            <li>It only reads, apart from its own logging switches.</li>
+            <li>Production always asks first.</li>
+            <li>Nothing is deployed or run without your click, and never in production.</li>
+            <li>Names, emails and secrets are masked before the AI model sees them.</li>
+          </ul>
+          <p>The full picture is on <a href="your-org/">page 4</a>.</p>
+        </li>
+        <li id="sign-in">
+          <h3>Sign in to an org</h3>
+          <p>Open Settings, then <b>Connectors</b>, then <b>Salesforce</b>, and choose <b>Sign in to an org</b>. Pick the kind of org, give it a short name, and choose <b>Open the browser to log in</b>. Telltale never asks for your Salesforce password.</p>
+          <p>Orgs you already use on this Mac show up on their own, marked <b>New</b>.</p>
+        </li>
+        <li id="project">
+          <h3>Create your first project</h3>
+          <p>A project is a code repository together with the orgs and tickets it runs on. On the start screen, choose <b>Select a repo</b> and pick one from GitHub or Bitbucket, paste a link, or choose a folder on your Mac.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-home-dark.webp"><img src="img/g-home-light.webp" width="1600" height="1025" alt="The start screen before any project exists, with Set up your first project." loading="lazy" decoding="async"></picture></figure>
+          <p>Next, add the orgs and ticket tools it uses. Nothing is read from an org until you ask. Choose <b>Create project</b>, or <b>Do this later</b> to skip it.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-project-dark.webp"><img src="img/g-project-light.webp" width="1600" height="1025" alt="Set up a project: its Salesforce orgs, ticket tools and other connectors." loading="lazy" decoding="async"></picture></figure>
+          <div class="note"><p>You can also chat without a project. Your lead will ask for what it needs.</p></div>
+        </li>
+        <li id="first-chat">
+          <h3>Your first chat, from question to answer</h3>
+          <p>Type what broke, the way you'd tell a colleague. You can paste a story link, type <b>@</b> for a user or <b>#</b> for a record.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-start-dark.webp"><img src="img/g-start-light.webp" width="1600" height="1025" alt="The start screen with a question typed in the box." loading="lazy" decoding="async"></picture></figure>
+          <p>When Telltale needs something from your org, it asks in a bar above the reply box. Here it wants to turn on logs for one person. Press <kbd>1</kbd> or <kbd>Return</kbd> to say yes, <kbd>2</kbd> for the next choice, or <kbd>Esc</kbd> to answer later. Logging in production always asks first.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-logs-dark.webp"><img src="img/g-logs-light.webp" width="1600" height="1025" alt="The ask bar: Turn on logs for a user in a sandbox, with Not now and Turn on logs." loading="lazy" decoding="async"></picture></figure>
+          <p>Now reproduce the problem in your browser. Telltale reads each log as it arrives. The <b>Reads</b> pill by the reply box shows whether your lead <b>Asks first</b> before reading your org or is set to <b>Auto</b>.</p>
+          <p>The answer starts with the finding. Open the evidence under it to see exactly what your lead read.</p>
+          <figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="img/g-answer-dark.webp"><img src="img/g-answer-light.webp" width="1600" height="1025" alt="An answer: the finding first, numbered sources, and how many reads it took." loading="lazy" decoding="async"></picture></figure>
+          <p class="cap">Screens use made-up data.</p>
+        </li>
+      </ol>
+
+      <nav class="next" aria-label="Guide pages">
+        <span></span>
+        <a href="around/"><small>Next, page 2</small><b>Find your way around →</b></a>
+      </nav>
+    </article>
+  </div>
+</div>
+<footer>
+  <div class="wrap">
+    <span>Telltale for Mac. Guide for Beta 1.8.1.</span>
+    <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+  </div>
+</footer>
+</body>
+</html>

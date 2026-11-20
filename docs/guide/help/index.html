@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help · Telltale Guide</title>
+<meta name="description" content="Fixes by symptom, keyboard shortcuts, the diagnostics log, feedback and uninstall. Written for Beta 1.8.1.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../guide.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="../../" aria-label="Telltale, home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7FB4FF"/><stop offset=".5" stop-color="#8A86FF"/><stop offset="1" stop-color="#C79BFF"/></linearGradient><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34363F"/><stop offset="1" stop-color="#16171B"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#bg2)"/><path d="M10 38h10l6-16 8 24 6-12h14" fill="none" stroke="url(#bg1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Telltale
+    </a>
+    <nav class="toplinks" aria-label="Site"><a class="toplink" href="../../#download">Download</a><a class="toplink" href="../" aria-current="page">Guide</a><a class="toplink hide-s" href="https://github.com/ryanStark24/telltale-releases/releases">All releases</a></nav>
+  </header>
+
+  <div class="layout">
+    <aside class="side" aria-label="Guide pages">
+      <h2>Guide</h2>
+      <ol><li><a href="../"><span>1</span>Get started</a></li><li><a href="../around/"><span>2</span>Find your way around</a></li><li><a href="../features/"><span>3</span>What it can do</a></li><li><a href="../your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="../help/" aria-current="page"><span>5</span>Help</a></li></ol>
+    </aside>
+
+    <article>
+      <details class="mnav">
+        <summary><span>Guide <small>· 5 of 5 · Help</small></span></summary>
+        <ol><li><a href="../"><span>1</span>Get started</a></li><li><a href="../around/"><span>2</span>Find your way around</a></li><li><a href="../features/"><span>3</span>What it can do</a></li><li><a href="../your-org/"><span>4</span>What Telltale does in your org</a></li><li><a href="../help/" aria-current="page"><span>5</span>Help</a></li></ol>
+      </details>
+
+      <p class="stamp">Written for Beta 1.8.1</p>
+      <h1>Help</h1>
+      <p class="lede">Find your symptom, see what Telltale says, and do the next step.</p>
+
+      <h2 class="sec" id="trouble">When something goes wrong</h2>
+      <section class="sym" id="open">
+        <h3>Telltale won't open</h3>
+        <p><span class="lbl">You see</span> macOS blocks it, or nothing happens.</p>
+        <p><span class="lbl">Do this</span> Drag Telltale into <b>Applications</b> and open it from there. If macOS asks, choose <b>Open</b>. On a work Mac, ask IT to allow the app <code>dev.telltale.app</code>.</p>
+
+      </section>
+      <section class="sym" id="setup">
+        <h3>Salesforce access is still being set up</h3>
+        <p><span class="lbl">You see</span> The strip <b>Setting things up on this Mac</b>, or <b>I couldn't finish setting things up</b>.</p>
+        <p><span class="lbl">Do this</span> The first setup takes a few minutes and keeps going while you answer questions. If it stopped, choose <b>Try again</b>. If it stops again, choose <b>Copy details for IT</b> and send them on. Settings, then <b>About</b>, then <b>This Mac</b> shows where it stands.</p>
+
+      </section>
+      <section class="sym" id="no-orgs">
+        <h3>No orgs to pick</h3>
+        <p><span class="lbl">You see</span> The org list is empty.</p>
+        <p><span class="lbl">Do this</span> Open Settings, then <b>Connectors</b>, then <b>Salesforce</b>, and choose <b>Sign in to an org</b>. If you signed in elsewhere on your Mac, choose <b>Refresh org list</b>.</p>
+
+      </section>
+      <section class="sym" id="signed-out">
+        <h3>Your sign-in ran out</h3>
+        <p><span class="lbl">You see</span> <b>Your sign-in to</b> your org <b>ran out.</b></p>
+        <p><span class="lbl">Do this</span> Choose <b>Sign in again</b>. Reading carries on and nothing is lost.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-signin-dark.webp"><img src="../img/g-signin-light.webp" width="1600" height="725" alt="A card saying the sign-in ran out, with a Sign in again button, above the logging line." loading="lazy" decoding="async"></picture></figure>
+      </section>
+      <section class="sym" id="no-logging">
+        <h3>Logging won't start</h3>
+        <p><span class="lbl">You see</span> <b>Your user in</b> your org <b>can't turn on debug logs. It needs View All Data or Manage Users.</b> Or: <b>Salesforce API access is off for your user</b>.</p>
+        <p><span class="lbl">Do this</span> Ask a Salesforce admin to give your user View All Data or Manage Users, or to turn on API access. If you see that the org has used up its API calls for today, try again tomorrow.</p>
+
+      </section>
+      <section class="sym" id="no-logs">
+        <h3>No logs appear</h3>
+        <p><span class="lbl">You see</span> <b>No logs yet for</b> a person, after about two minutes.</p>
+        <p><span class="lbl">Do this</span> Check that you are running the steps as that person, in that org. Logs are written for the person Telltale is watching, not for everyone.</p>
+
+      </section>
+      <section class="sym" id="full">
+        <h3>Debug log storage is full</h3>
+        <p><span class="lbl">You see</span> <b>Lead wants to delete</b> a number of <b>your debug logs</b>, with <b>Delete</b> and <b>Not now</b>.</p>
+        <p><span class="lbl">Do this</span> Salesforce stops saving new logs when storage is full. Deleting is permanent, and Salesforce doesn't keep deleted logs. You can choose only your own logs, or all of the org's. Logs this chat already read stay in Telltale. If you would rather not, choose <b>Not now</b> and clear space in Salesforce yourself.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-full-dark.webp"><img src="../img/g-full-light.webp" width="1600" height="809" alt="The ask to delete the user's debug logs: Frees log storage. This can't be undone. Not now, Delete." loading="lazy" decoding="async"></picture></figure>
+      </section>
+      <section class="sym" id="model">
+        <h3>The AI model refused the key, is busy, or is out of credit</h3>
+        <p><span class="lbl">You see</span> A message such as <b>refused the key. Update it in Settings > Models</b>, or says it is busy or out of credit.</p>
+        <p><span class="lbl">Do this</span> Open Settings, then <b>Models</b>, and choose <b>Test</b> on the source. Fix the key there, or pick another source. If it is busy, wait a minute and ask again.</p>
+
+      </section>
+      <section class="sym" id="token">
+        <h3>A connector refused the token</h3>
+        <p><span class="lbl">You see</span> <b>refused the token</b>, with likely causes listed.</p>
+        <p><span class="lbl">Do this</span> Read the causes. Choose <b>Make a new token</b> and follow the steps. If an admin has to approve it, choose <b>Copy a message for your admin</b>.</p>
+
+      </section>
+      <section class="sym" id="stuck">
+        <h3>An answer is stuck</h3>
+        <p><span class="lbl">You see</span> <b>Still working. No update for 30 s.</b> After a minute and a half: <b>Telltale's background process isn't answering.</b></p>
+        <p><span class="lbl">Do this</span> Choose <b>Stop</b> in the reply box, or <b>Restart it</b>. Your chats are kept. If you see <b>That answer didn't finish. Ask again.</b>, choose <b>Try again</b>.</p>
+
+      </section>
+      <section class="sym" id="recording">
+        <h3>Recording can't find the Salesforce tab</h3>
+        <p><span class="lbl">You see</span> <b>Telltale can't see your org's Salesforce tab.</b></p>
+        <p><span class="lbl">Do this</span> Bring that tab to the front in Chrome, Edge, Brave, Arc or Safari, then start again.</p>
+
+      </section>
+      <section class="sym" id="blocked">
+        <h3>Recording or the mic is blocked</h3>
+        <p><span class="lbl">You see</span> <b>Not recording</b>, then <b>Screen Recording is off for Telltale, so nothing was recorded.</b> For the mic: <b>No microphone found</b>.</p>
+        <p><span class="lbl">Do this</span> Open System Settings, then <b>Privacy & Security</b>, then <b>Screen Recording</b> (or <b>Microphone</b>) and allow Telltale. If it isn't in the list, press <b>+</b> and add it from Applications. Quit and reopen Telltale, then try again. Screen Recording works only when Telltale runs from Applications.</p>
+<figure class="shot"><picture><source media="(prefers-color-scheme: dark)" srcset="../img/g-screenoff-dark.webp"><img src="../img/g-screenoff-light.webp" width="1600" height="384" alt="The recording bar showing Not recording, with the Screen Recording permission row under it." loading="lazy" decoding="async"></picture></figure>
+      </section>
+      <section class="sym" id="updates">
+        <h3>Updates</h3>
+        <p><span class="lbl">You see</span> <b>Couldn't check. Tries again in 4 h.</b> Or a card asking <b>Move Telltale to Applications?</b></p>
+        <p><span class="lbl">Do this</span> Open Settings, then <b>About</b>, and choose <b>Check now</b>. Updates install themselves only when Telltale runs from Applications, so choose <b>Move and reopen</b> if asked. When the sidebar says a new version is ready, choose <b>Restart</b>.</p>
+
+      </section>
+
+      <h2 class="sec" id="keys">Keyboard shortcuts</h2>
+      <p>The last two work from any app. The overlay shortcut does nothing until a chat exists.</p>
+      <div class="tw"><table class="keys"><thead><tr><th>To do this</th><th>Press</th></tr></thead><tbody><tr><td>New chat</td><td><kbd>⌘</kbd> <kbd>N</kbd></td></tr><tr><td>Search the sidebar</td><td><kbd>⌘</kbd> <kbd>F</kbd></td></tr><tr><td>Settings</td><td><kbd>⌘</kbd> <kbd>,</kbd></td></tr><tr><td>Hide or show the sidebar</td><td><kbd>⌘</kbd> <kbd>\</kbd></td></tr><tr><td>Delete the chat selected in the sidebar</td><td><kbd>⌘</kbd> <kbd>⌫</kbd></td></tr><tr><td>Send a message</td><td><kbd>Return</kbd></td></tr><tr><td>New line in a message</td><td><kbd>Shift</kbd> <kbd>Return</kbd></td></tr><tr><td>Answer a question from Telltale</td><td><kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, or <kbd>Return</kbd> for the first</td></tr><tr><td>Set a question aside, or close a panel</td><td><kbd>Esc</kbd></td></tr><tr><td>In the @ and # list: move, add, open Lookup</td><td><kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Return</kbd>, <kbd>⌘</kbd> <kbd>Return</kbd></td></tr><tr><td>Quick ask, from any app</td><td><kbd>Ctrl</kbd> <kbd>Option</kbd> <kbd>⌘</kbd> <kbd>Space</kbd></td></tr><tr><td>Show or hide the overlay pill, from any app</td><td><kbd>Ctrl</kbd> <kbd>Option</kbd> <kbd>⌘</kbd> <kbd>O</kbd></td></tr></tbody></table></div>
+
+      <h2 class="sec" id="log">Diagnostics log</h2>
+      <p>If something misbehaves and you need to show someone, Telltale keeps a plain log on your Mac. Open Settings, then <b>About</b>, then <b>This Mac</b>, and look for <b>Diagnostics log</b>. The file is here:</p>
+      <p><code>~/Library/Application Support/Telltale/logs/telltale.log</code></p>
+      <p>It stays on your Mac until you send it. Read it before you share it, in case it names an org or a customer.</p>
+
+      <h2 class="sec" id="fb">Feedback</h2>
+      <p>Tell us what broke, what confused you and what you wish it did. Use the feedback section on <a href="../../#fb">the download page</a>, or open an issue on the <a href="https://github.com/ryanStark24/telltale-releases/releases">public releases page</a>. Both are public, so leave out org names and customer data.</p>
+
+      <h2 class="sec" id="uninstall">Uninstall</h2>
+      <ol class="plain steps">
+        <li>Quit Telltale.</li>
+        <li>Delete <b>Telltale</b> from <b>Applications</b>.</li>
+        <li>To remove your chats and settings too, delete <code>~/Library/Application Support/Telltale</code>.</li>
+        <li>To remove saved keys and tokens, open Keychain Access and delete the items named <b>Telltale</b>.</li>
+        <li>Code Telltale cloned for you is in <code>~/Telltale/code</code>. Delete it if you no longer need it.</li>
+      </ol>
+
+      <nav class="next" aria-label="Guide pages">
+        <a href="../your-org/"><small>Back, page 4</small><b>← What Telltale does in your org</b></a>
+        <span></span>
+      </nav>
+    </article>
+  </div>
+</div>
+<footer>
+  <div class="wrap">
+    <span>Telltale for Mac. Guide for Beta 1.8.1.</span>
+    <a href="https://github.com/ryanStark24/telltale-releases/releases">Releases on GitHub</a>
+  </div>
+</footer>
+</body>
+</html>
