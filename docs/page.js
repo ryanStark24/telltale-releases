@@ -254,10 +254,10 @@ var TELLTALE_CONFIG={
   /* ---------- feedback: rating row prefills the GitHub issue form ---------- */
   var RATES=[['1 - It did not work for me','Not for me'],['2 - Hard going','Hard going'],['3 - Okay','Okay'],['4 - Good','Good'],['5 - Great','Great']];
   var KINDS=[
-    {k:'feedback',name:'Feedback',tpl:'feedback.yml',cmt:'Comments',ph:'What worked, what didn’t, what you wish it did.',send:'Send feedback',done:'Your feedback was sent.'},
-    {k:'bug',name:'Bug',tpl:'bug_report.yml',cmt:'What happened, and what did you expect?',ph:'What happened, what you expected, and the steps to get there.',send:'Send bug report',done:'Your bug report was sent.'},
-    {k:'feature',name:'Feature idea',tpl:'feature_request.yml',cmt:'What is the idea?',ph:'The problem you have, your idea, and how you would use it.',send:'Send idea',done:'Your idea was sent.'},
-    {k:'question',name:'Question',tpl:'question.yml',cmt:'What would you like to know?',ph:'Ask anything about how Telltale works.',send:'Send question',done:'Your question was sent.'}
+    {k:'feedback',name:'Feedback',tpl:'feedback.yml',cmt:'Comments',ph:'What worked, what didn’t, what you wish it did.',send:'Send feedback',done:'Your feedback was sent. It is public on GitHub.'},
+    {k:'bug',name:'Bug',tpl:'bug_report.yml',cmt:'What happened, and what did you expect?',ph:'What happened, what you expected, and the steps to get there.',send:'Send bug report',done:'Your bug report was sent. It is public on GitHub.'},
+    {k:'feature',name:'Feature idea',tpl:'feature_request.yml',cmt:'What is the idea?',ph:'The problem you have, your idea, and how you would use it.',send:'Send idea',done:'Your idea was sent. It is public on GitHub.'},
+    {k:'question',name:'Question',tpl:'question.yml',cmt:'What would you like to know?',ph:'Ask anything about how Telltale works.',send:'Send question',done:'Your question was sent. It is public on GitHub.'}
   ];
   var kind=KINDS[0];
   var FB='https://github.com/ryanStark24/telltale-releases/issues/new?template=';

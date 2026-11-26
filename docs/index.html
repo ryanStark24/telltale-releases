@@ -339,17 +339,16 @@ footer a{color:var(--fg-2);text-underline-offset:4px}
                 <div class="fld"><label for="fb-ver">Telltale version</label><input id="fb-ver" name="version" type="text" inputmode="text" autocomplete="off" placeholder="Shown in Settings › About" maxlength="20"></div>
               </div>
               <div class="fld"><label for="fb-msg" id="fb-msg-l">Comments</label>
-                <textarea id="fb-msg" name="comments" rows="4" maxlength="2000" required placeholder="What worked, what didn’t, what you wish it did."></textarea>
+                <textarea id="fb-msg" aria-describedby="fb-warn" name="comments" rows="4" maxlength="2000" required placeholder="What worked, what didn’t, what you wish it did."></textarea>
                 <span class="count" id="fb-count" aria-hidden="true">0 / 2000</span></div>
-              <p class="fb-note">Your feedback is posted as a public GitHub issue. Leave out anything private.</p>
+              <p class="fb-note" id="fb-warn">Reports are public. Leave out org data, record IDs, usernames, log contents and client names.</p>
               <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" id="fb-hp" tabindex="-1" autocomplete="off"></label></div>
-              <p class="priv">Each message becomes a public GitHub issue. Don’t include org names, customer data or anything private.</p>
               <div id="ts-box"></div>
               <button class="btn quiet" id="fb-send" type="submit">Send feedback</button>
             </div>
             <p class="status" id="fb-status" role="status" aria-live="polite"></p>
           </form>
-          <div id="fb-thanks" class="thanks" hidden tabindex="-1"><b>Thank you.</b><span id="fb-thanks-text">Your feedback was sent.</span> <a id="fb-issue" href="#" hidden>See it on GitHub</a></div>
+          <div id="fb-thanks" class="thanks" hidden tabindex="-1"><b>Thank you.</b><span id="fb-thanks-text">Your feedback was sent. It is public on GitHub.</span> <a id="fb-issue" href="#" hidden>See it on GitHub</a></div>
           <p class="gh" id="fb-gh"><a class="btn quiet" id="fb-link" href="https://github.com/ryanStark24/telltale-releases/issues/new?template=feedback.yml">Open an issue on GitHub</a></p>
         </div>
       </div>
